@@ -1,6 +1,7 @@
-name = "rockwell"
-main = "worker.js"
-compatibility_date = "2025-08-21"
+name = "rockwell-event-center"
+main = "worker/src/index.ts"
+compatibility_date = "2025-01-01"
 
 [assets]
-directory = "./dist"
+directory = "./app/dist"
+binding = "ASSETS"
