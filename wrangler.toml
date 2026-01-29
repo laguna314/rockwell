@@ -1,4 +1,4 @@
-name = "rockwell-event-center"
+name = "rockwell"
 main = "worker/src/index.ts"
 compatibility_date = "2025-01-01"
 
