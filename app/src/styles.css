@@ -1,0 +1,84 @@
+:root {
+  --green: #6fbf3a;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+}
+
+.header {
+  border-bottom: 1px solid #222;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: bold;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.logo {
+  width: 240px;
+}
+
+.subhead {
+  opacity: 0.8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #111;
+  padding: 12px;
+  border: 1px solid #222;
+}
+
+.badge {
+  display: inline-block;
+  margin: 8px 0;
+  padding: 4px 8px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-size: 12px;
+}
+
+button {
+  background: var(--green);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-inner {
+  background: #111;
+  padding: 20px;
+  border: 1px solid #333;
+}
