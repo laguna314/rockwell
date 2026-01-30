@@ -160,7 +160,7 @@ a:hover { color: #fff; }
   /* Crop ceiling, keep crowd/stage */
   inset: -12% 0 -22% 0;
 
-  background-image: url("/venue/hero.jpg");
+  background-image: url("/venue/hero.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center 35%;
