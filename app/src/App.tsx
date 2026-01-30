@@ -45,11 +45,7 @@ export default function App() {
       <section className="hero">
         {/* Video/Photo placeholder */}
         <div className="hero-media" aria-hidden="true">
-          <Placeholder
-            label="HERO BACKGROUND VIDEO / PHOTO (placeholder)"
-            sublabel="Swap with crowd/stage footage or a cinematic venue image"
-            height={520}
-          />
+          <div className="hero-bg" />
         </div>
 
         <div className="hero-overlay" />
