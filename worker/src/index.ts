@@ -10,7 +10,7 @@ export default {
           slug: "example-show",
           title: "Example Show",
           dateISO: "2026-02-14T20:00:00-06:00",
-          posterUrl: "/posters/example.png",
+          posterUrl: "/posters/example.jpg",
           alcoholWristbandsRequired: true
         }
       ]);

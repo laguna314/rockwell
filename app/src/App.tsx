@@ -163,7 +163,7 @@ export default function App() {
         <section className="section">
           <SectionTitle
             title="The Venue"
-            subtitle="Drop real venue photos here. This strip sells the vibe instantly."
+            subtitle="Drop general venue photos here."
           />
           <div className="photo-strip">
             <Placeholder label="PHOTO 1 (placeholder)" height={180} />
@@ -177,7 +177,7 @@ export default function App() {
         <section className="section">
           <SectionTitle
             title="Why Rockwell"
-            subtitle="Promoters, bands, and fans — this is what makes Rockwell hit different."
+            subtitle="Promoters, bands, and fans — this is what makes Rockwell different."
           />
 
           <div className="features">
@@ -265,7 +265,7 @@ export default function App() {
             </div>
             <div className="signup-form">
               <Placeholder label="EMAIL SIGNUP FORM (placeholder)" height={92} />
-              <div className="muted">Connect to your email tool later (Mailchimp, ConvertKit, etc.)</div>
+              <div className="muted">Connect to sendgrid</div>
             </div>
           </div>
         </section>
@@ -274,7 +274,7 @@ export default function App() {
         <section className="section">
           <SectionTitle
             title="What people say"
-            subtitle="Drop real quotes/reviews here when you have them."
+            subtitle="Drop real quotes reviews here when you have them."
           />
           <div className="quotes">
             <div className="quote">
