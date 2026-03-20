@@ -640,6 +640,12 @@ a:hover { color: #fff; }
     gap: 0.75rem;
 }
 
+.event-detail-buy-wrap {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 @media (max-width: 960px) {
     .event-detail-grid {
         grid-template-columns: 1fr;
@@ -708,6 +714,7 @@ a:hover { color: #fff; }
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
+    margin-bottom: 1rem;
 }
 
 .ticket-row {

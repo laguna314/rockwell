@@ -94,7 +94,7 @@ export default function EventDetailPage() {
 
     const selectedTotalCents = ticketTypes.reduce((sum, tt) => {
         const qty = quantities[tt.id] || 0;
-        return sum + qty * (tt.price_cents || 0);
+        return sum + qty * (tt.priceCents || 0);
     }, 0);
 
     return (
