@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import TicketSelector from "../components/TicketSelector";
@@ -120,34 +120,39 @@ export default function EventDetailPage() {
                             <div className="event-detail-grid">
                                 <div className="event-detail-main">
                                     {event.poster_url ? (
-                                        <img
-                                            src={event.poster_url}
-                                            alt={event.title}
-                                            className="event-detail-poster"
-                                        />
+                                        <div className="event-detail-poster-wrap">
+                                            <img
+                                                src={event.poster_url}
+                                                alt={event.title}
+                                                className="event-detail-poster"
+                                            />
+                                        </div>
                                     ) : null}
 
-                                    <div className="event-detail-card">
-                                        <h3 className="event-detail-section-title">
-                                            About this event
-                                        </h3>
-                                        <p>{event.description}</p>
+                                    <div className="event-detail-card event-detail-card-glass">
+                                        <div className="pill-label">
+                                            About This Event
+                                        </div>
+                                        <p className="event-detail-description">
+                                            {event.description ||
+                                                "More event details coming soon."}
+                                        </p>
                                     </div>
                                 </div>
 
                                 <aside className="event-detail-side">
-                                    <div className="event-detail-card">
-                                        <h3 className="event-detail-section-title">
-                                            Event details
-                                        </h3>
+                                    <div className="event-detail-card event-detail-card-glass">
+                                        <div className="pill-label">Event Details</div>
 
                                         <div className="event-detail-meta">
                                             <div>
-                                                <strong>Date:</strong> {formatDateTime(event.dateISO)}
+                                                <strong>Date:</strong>{" "}
+                                                {formatDateTime(event.dateISO)}
                                             </div>
                                             <div>
                                                 <strong>Venue:</strong>{" "}
-                                                {event.venue?.name || "Rockwell Event Center"}
+                                                {event.venue?.name ||
+                                                    "Rockwell Event Center"}
                                             </div>
                                             <div>
                                                 <strong>Location:</strong>{" "}
@@ -156,13 +161,16 @@ export default function EventDetailPage() {
                                             </div>
                                             <div>
                                                 <strong>Policy:</strong>{" "}
-                                                {event.agePolicy || "See details"}
+                                                {event.agePolicy ||
+                                                    "See details"}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="event-detail-card">
-                                        <h3 className="event-detail-section-title">Tickets</h3>
+                                    <div className="event-detail-card event-detail-ticket-card">
+                                        <div className="pill-label pill-label-accent">
+                                            Tickets
+                                        </div>
 
                                         <TicketSelector
                                             ticketTypes={ticketTypes}
@@ -171,16 +179,18 @@ export default function EventDetailPage() {
                                         />
 
                                         {error ? (
-                                            <div className="muted" style={{ marginTop: "1rem" }}>
+                                            <div className="event-detail-inline-error">
                                                 {error}
                                             </div>
                                         ) : null}
 
-                                        <div style={{ marginTop: "1rem" }}>
+                                        <div className="event-detail-buy-wrap">
                                             <button
                                                 onClick={onCheckout}
-                                                disabled={buying || !hasAvailableTickets}
-                                                className="btn primary"
+                                                disabled={
+                                                    buying || !hasAvailableTickets
+                                                }
+                                                className="event-detail-buy-btn"
                                             >
                                                 {buying
                                                     ? "Redirecting..."
@@ -198,8 +208,12 @@ export default function EventDetailPage() {
 
                 <footer className="footer">
                     <div className="footer-left">
-                        <div className="footer-brand">Rockwell Event Center</div>
-                        <div className="muted">Amarillo, TX • Live Music • Rentals</div>
+                        <div className="footer-brand">
+                            Rockwell Event Center
+                        </div>
+                        <div className="muted">
+                            Amarillo, TX • Live Music • Rentals
+                        </div>
                     </div>
                     <div className="footer-links">
                         <Link to="/events">Events</Link>

@@ -566,9 +566,23 @@ a:hover { color: #fff; }
 
 
 
+.pill-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 .event-detail-grid {
     display: grid;
-    grid-template-columns: 1.6fr 0.9fr;
+    grid-template-columns: 1.15fr 0.95fr;
     gap: 2rem;
     align-items: start;
 }
@@ -580,26 +594,45 @@ a:hover { color: #fff; }
     gap: 1.25rem;
 }
 
+.event-detail-poster-wrap {
+    display: flex;
+    justify-content: center;
+}
+
 .event-detail-poster {
     width: 100%;
-    max-height: 640px;
-    object-fit: cover;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: contain;
     border-radius: 20px;
     display: block;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 .event-detail-card {
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    border-radius: 22px;
     padding: 1.25rem;
     background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(8px);
+}
+
+.event-detail-card-glass {
+    background: linear-gradient( 180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025) );
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
 .event-detail-section-title {
     margin: 0 0 1rem 0;
     font-size: 1.1rem;
     font-weight: 700;
+}
+
+.event-detail-description {
+    margin: 0;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.88);
 }
 
 .event-detail-meta {
