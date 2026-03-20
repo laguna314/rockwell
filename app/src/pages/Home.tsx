@@ -413,13 +413,14 @@ export default function App() {
                         <div className="find-map">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5414.498098649695!2d-101.92061582291012!3d35.0426639647856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87015d0e03972d4d%3A0x65404ceb549e2b15!2sRockwell%20Event%20Center%20Canyon%2CTX!5e1!3m2!1sen!2sus!4v1774043414830!5m2!1sen!2sus"
-                                width="600"
-                                height="450"
-                                style="border:0;"
-                                allowfullscreen=""
+                                width="100%"
+                                height="260"
+                                style={{ border: 0 }}
+                                allowFullScreen
                                 loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                            ></iframe>
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="Rockwell Event Center map"
+                            />
                         </div>
                     </div>
                 </section>
