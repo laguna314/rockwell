@@ -288,6 +288,12 @@ a:hover { color: #fff; }
 .find-title { font-weight: 1000; }
 .find-actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
 .find-map { border-radius: 18px; overflow: hidden; }
+    .find-map iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 260px;
+    }
 
 /* Footer */
 .footer {
@@ -894,4 +900,32 @@ a:hover { color: #fff; }
 
     .venue-photo:hover img {
         transform: scale(1.03);
+    }
+
+.rentals-photo {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+}
+
+    .rentals-photo img {
+        width: 100%;
+        height: 100%;
+        max-height: 360px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.25s ease;
+    }
+
+    .rentals-photo:hover img {
+        transform: scale(1.02);
+    }
+
+    .rentals-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( to top, rgba(0,0,0,0.5), transparent 50% );
     }

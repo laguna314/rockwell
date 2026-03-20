@@ -254,11 +254,7 @@ export default function App() {
                             </div>
                             <div className="feature-text">
                                 Clean power, clean sound, and a layout that
-                                works for live shows.
-                                <span className="muted">
-                                    {" "}
-                                    (Specs placeholder)
-                                </span>
+                                works for small and large live shows.
                             </div>
                         </div>
                         <div className="feature">
@@ -266,7 +262,7 @@ export default function App() {
                                 Fast entry + mobile tickets
                             </div>
                             <div className="feature-text">
-                                Embedded checkout and mobile-friendly scanning.
+                                Digital first, but paper tickets are good too!
                             </div>
                         </div>
                         <div className="feature">
@@ -338,18 +334,11 @@ export default function App() {
                         </div>
 
                         <div className="rentals-media">
-                            <Placeholder
-                                label="RENTALS HERO IMAGE (placeholder)"
-                                height={320}
-                            />
-                            <div className="rentals-mini">
-                                <Placeholder
-                                    label="FLOORPLAN / CAPACITY (placeholder)"
-                                    height={140}
-                                />
-                                <Placeholder
-                                    label="AMENITIES (placeholder)"
-                                    height={140}
+                            <div className="rentals-photo">
+                                <img
+                                    src="/venue/rockwell5.jpg"
+                                    alt="Rockwell Event Center rental space"
+                                    loading="lazy"
                                 />
                             </div>
                         </div>
@@ -368,11 +357,7 @@ export default function App() {
                             </p>
                         </div>
                         <div className="signup-form">
-                            <Placeholder
-                                label="EMAIL SIGNUP FORM (placeholder)"
-                                height={92}
-                            />
-                            <div className="muted">Connect to sendgrid</div>
+                            <Placeholder label="COMING SOON" height={92} />
                         </div>
                     </div>
                 </section>
@@ -387,64 +372,20 @@ export default function App() {
                             <div className="quote-text">
                                 “Best sound in town.”
                             </div>
-                            <div className="quote-by">
-                                — Reviewer (placeholder)
-                            </div>
+                            <div className="quote-by">— Reviewer</div>
                         </div>
                         <div className="quote">
                             <div className="quote-text">
                                 “The staff handled our event perfectly.”
                             </div>
-                            <div className="quote-by">
-                                — Promoter (placeholder)
-                            </div>
+                            <div className="quote-by">— Promoter</div>
                         </div>
                         <div className="quote">
                             <div className="quote-text">
                                 “Rockwell brings the energy.”
                             </div>
-                            <div className="quote-by">
-                                — Artist (placeholder)
-                            </div>
+                            <div className="quote-by">— Artist</div>
                         </div>
-                    </div>
-                </section>
-
-                <section className="section">
-                    <SectionTitle
-                        title="From the feed"
-                        subtitle="Placeholder grid for Instagram / socials. Swap to embeds later."
-                        right={
-                            <a className="link" href="#" aria-disabled="true">
-                                Follow @rockwell… (placeholder)
-                            </a>
-                        }
-                    />
-                    <div className="ig-grid">
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="IG POST (placeholder)"
-                            height={180}
-                        />
                     </div>
                 </section>
 
@@ -456,24 +397,29 @@ export default function App() {
                     <div className="find">
                         <div className="find-card">
                             <div className="find-title">Address</div>
-                            <div className="muted">
-                                Street address (placeholder)
-                            </div>
-                            <div className="muted">Amarillo, TX</div>
+                            <div className="muted">16301 I-27</div>
+                            <div className="muted">Canyon, TX 79015</div>
                             <div className="find-actions">
-                                <a className="btn outline" href="#contact">
-                                    Contact
-                                </a>
-                                <a className="btn primary" href="#events">
-                                    Tickets
+                                <a
+                                    className="btn outline"
+                                    href="https://www.google.com/maps/search/?api=1&query=Rockwell+Event+Center+Amarillo+TX"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Get Directions
                                 </a>
                             </div>
                         </div>
                         <div className="find-map">
-                            <Placeholder
-                                label="GOOGLE MAP EMBED (placeholder)"
-                                height={260}
-                            />
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5414.498098649695!2d-101.92061582291012!3d35.0426639647856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87015d0e03972d4d%3A0x65404ceb549e2b15!2sRockwell%20Event%20Center%20Canyon%2CTX!5e1!3m2!1sen!2sus!4v1774043414830!5m2!1sen!2sus"
+                                width="600"
+                                height="450"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                            ></iframe>
                         </div>
                     </div>
                 </section>
