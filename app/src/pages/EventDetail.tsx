@@ -193,7 +193,7 @@ export default function EventDetailPage() {
                                         ) : null}
 
                                         <div className="event-detail-buy-wrap">
-                                                        {selectedTotalCents > && (<div className="event-detail-total-row">
+                                                        {selectedTotalCents > && 0 (<div className="event-detail-total-row">
                                                             <span>Order Total</span>
                                                             <strong>
                                                                 $
