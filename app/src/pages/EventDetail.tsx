@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+Ôªøimport { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import TicketSelector from "../components/TicketSelector";
@@ -100,7 +100,7 @@ export default function EventDetailPage() {
                 <section className="section">
                     <div style={{ marginBottom: "1rem" }}>
                         <Link to="/events" className="link">
-                            ? Back to events
+                            ‚Üê Back to events
                         </Link>
                     </div>
 
@@ -114,7 +114,7 @@ export default function EventDetailPage() {
                         <>
                             <SectionTitle
                                 title={event.title}
-                                subtitle={`${formatDateTime(event.dateISO)} ï ${event.agePolicy || "See details"}`}
+                                subtitle={`${formatDateTime(event.dateISO)} ‚Ä¢ ${event.agePolicy || "See details"}`}
                             />
 
                             <div className="event-detail-grid">
@@ -199,7 +199,7 @@ export default function EventDetailPage() {
                 <footer className="footer">
                     <div className="footer-left">
                         <div className="footer-brand">Rockwell Event Center</div>
-                        <div className="muted">Amarillo, TX ï Live Music ï Rentals</div>
+                        <div className="muted">Amarillo, TX ‚Ä¢ Live Music ‚Ä¢ Rentals</div>
                     </div>
                     <div className="footer-links">
                         <Link to="/events">Events</Link>

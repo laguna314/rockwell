@@ -74,24 +74,6 @@ a:hover { color: #fff; }
   color: #d9ffbf;
 }
 
-/* HEADER (keep your existing Header.tsx) */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-}
-.header-inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.brand { font-weight: 950; letter-spacing: 1px; }
 
 /* HERO */
 .hero { position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -629,4 +611,61 @@ a:hover { color: #fff; }
     .event-detail-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* HEADER (keep your existing Header.tsx) */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 10, 10, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.25rem;
+}
+
+.header-logo img {
+    height: 40px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-nav {
+    display: flex;
+    gap: 1.25rem;
+}
+
+    .header-nav a {
+        font-size: 0.95rem;
+        opacity: 0.75;
+        transition: all 0.2s ease;
+    }
+
+        .header-nav a:hover {
+            opacity: 1;
+        }
+
+        .header-nav a.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+
+/* CTA button tweak */
+.header-cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
 }
