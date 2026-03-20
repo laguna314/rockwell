@@ -12,7 +12,7 @@ export default function Header() {
             <div className="header-inner">
                 {/* LEFT: LOGO */}
                 <Link to="/" className="header-logo">
-                    <img src="../public/ROCKWELL-01.png" alt="Rockwell" />
+                    <img src="/ROCKWELL-01.png" alt="Rockwell" />
                 </Link>
 
                 {/* RIGHT: NAV + CTA */}
