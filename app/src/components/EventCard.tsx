@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import type { PublicVenueEvent } from "../lib/accedo";
 
 function formatShort(iso?: string | null) {
     if (!iso) return "Date TBA";
@@ -20,21 +21,7 @@ function formatPrice(cents?: number | null) {
 }
 
 type EventCardProps = {
-    event: {
-        id: string;
-        slug: string;
-        title: string;
-        dateISO: string;
-        agePolicy?: string | null;
-        poster_url?: string | null;
-        startingPriceCents?: number | null;
-        hasTicketsAvailable?: boolean;
-        venue?: {
-            name?: string;
-            city?: string;
-            state?: string;
-        };
-    };
+    event: PublicVenueEvent;
 };
 
 export default function EventCard({ event }: EventCardProps) {
@@ -53,6 +40,7 @@ export default function EventCard({ event }: EventCardProps) {
                     src={event.poster_url || "/posters/example.jpg"}
                     alt={event.title}
                     loading="lazy"
+                    decoding="async"
                 />
                 <div className="event-media-overlay" />
 
@@ -84,7 +72,7 @@ export default function EventCard({ event }: EventCardProps) {
 
                 <div className="event-actions">
                     <Link className="btn primary" to={`/events/${event.slug}`}>
-                        {hasTickets ? "Buy Tickets" : "View Event"}
+                        {hasTickets ? "Buy Tickets" : "Sold Out"}
                     </Link>
 
                     <Link className="btn outline" to={`/events/${event.slug}`}>

@@ -1,5 +1,3 @@
-const ACCEDO_API_BASE = "https://accedotickets.com";
-
 export type PublicVenueEvent = {
     id: string;
     slug: string;
@@ -46,27 +44,41 @@ export type PublicTicketType = {
     isAvailable: boolean;
 };
 
-export async function getRockwellEvents(): Promise<PublicVenueEvent[]> {
-    const res = await fetch(
-        `${ACCEDO_API_BASE}/api/public/venues/rockwell-event-center/events`
-    );
+type CheckoutInput = {
+    eventId: string;
+    email?: string;
+    items: { ticketTypeId: string; quantity: number }[];
+    cancelUrl: string;
+};
+
+type CheckoutResponse = {
+    url: string;
+};
+
+async function readJsonOrThrow(res: Response) {
+    const data = await res.json().catch(() => null);
 
     if (!res.ok) {
-        throw new Error("Failed to load Rockwell events");
+        throw new Error(data?.error || `Request failed (${res.status})`);
     }
 
-    const data = await res.json();
-    return data.events || [];
+    return data;
+}
+
+export async function getRockwellEvents(): Promise<PublicVenueEvent[]> {
+    const res = await fetch("/api/events");
+    const data = await readJsonOrThrow(res);
+    return Array.isArray(data) ? data : [];
 }
 
 export async function getEventBySlug(slug: string): Promise<PublicEventDetail> {
-    const res = await fetch(`${ACCEDO_API_BASE}/api/public/events/${slug}`);
+    const res = await fetch(`/api/events/${encodeURIComponent(slug)}`);
+    const data = await readJsonOrThrow(res);
 
-    if (!res.ok) {
-        throw new Error("Failed to load event");
+    if (!data?.event) {
+        throw new Error("Event not found");
     }
 
-    const data = await res.json();
     return data.event;
 }
 
@@ -74,26 +86,18 @@ export async function getTicketTypesBySlug(
     slug: string
 ): Promise<PublicTicketType[]> {
     const res = await fetch(
-        `${ACCEDO_API_BASE}/api/public/events/${slug}/ticket-types`
+        `/api/events/${encodeURIComponent(slug)}/ticket-types`
     );
-
-    if (!res.ok) {
-        throw new Error("Failed to load ticket types");
-    }
-
-    const data = await res.json();
+    const data = await readJsonOrThrow(res);
     return data.ticketTypes || [];
 }
 
-export async function createCheckoutSession(input: {
-    eventId: string;
-    email?: string;
-    items: { ticketTypeId: string; quantity: number }[];
-    cancelUrl: string;
-}) {
+export async function createCheckoutSession(
+    input: CheckoutInput
+): Promise<CheckoutResponse> {
     const idempotencyKey = crypto.randomUUID();
 
-    const res = await fetch(`${ACCEDO_API_BASE}/api/checkout/session`, {
+    const res = await fetch("/api/checkout/session", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -104,16 +108,15 @@ export async function createCheckoutSession(input: {
             items: input.items,
             idempotencyKey,
             storefront: "rockwell-event-center",
-            successUrl:
-                "https://rockwelleventcenter.com/success?session_id={CHECKOUT_SESSION_ID}",
+            successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
             cancelUrl: input.cancelUrl,
         }),
     });
 
-    const data = await res.json();
+    const data = await readJsonOrThrow(res);
 
-    if (!res.ok) {
-        throw new Error(data?.error || "Failed to create checkout session");
+    if (!data?.url) {
+        throw new Error("Missing checkout URL");
     }
 
     return data;
