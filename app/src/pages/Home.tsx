@@ -204,25 +204,40 @@ export default function App() {
                 <section className="section">
                     <SectionTitle
                         title="The Venue"
-                        subtitle="Drop general venue photos here."
+                        subtitle="A look inside Rockwell Event Center."
                     />
                     <div className="photo-strip">
-                        <Placeholder
-                            label="PHOTO 1 (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="PHOTO 2 (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="PHOTO 3 (placeholder)"
-                            height={180}
-                        />
-                        <Placeholder
-                            label="PHOTO 4 (placeholder)"
-                            height={180}
-                        />
+                        <div className="venue-photo">
+                            <img
+                                src="/venue/rockwellout.jpg"
+                                alt="Exterior of Rockwell Event Center"
+                                loading="lazy"
+                            />
+                        </div>
+
+                        <div className="venue-photo">
+                            <img
+                                src="/venue/rockwell2.jpg"
+                                alt="Inside Rockwell Event Center"
+                                loading="lazy"
+                            />
+                        </div>
+
+                        <div className="venue-photo">
+                            <img
+                                src="/venue/rockwell5.jpg"
+                                alt="Venue space at Rockwell Event Center"
+                                loading="lazy"
+                            />
+                        </div>
+
+                        <div className="venue-photo">
+                            <img
+                                src="/venue/rockwellstage.jpg"
+                                alt="Stage at Rockwell Event Center"
+                                loading="lazy"
+                            />
+                        </div>
                     </div>
                 </section>
 
