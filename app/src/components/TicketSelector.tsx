@@ -1,43 +1,86 @@
 import type { PublicTicketType } from "../lib/accedo";
-import { formatCurrency } from "../lib/format";
 
 type Props = {
-  ticketTypes: PublicTicketType[];
-  quantities: Record<string, number>;
-  onQuantityChange: (ticketTypeId: string, quantity: number) => void;
+    ticketTypes: PublicTicketType[];
+    quantities: Record<string, number>;
+    onQuantityChange: (ticketTypeId: string, quantity: number) => void;
 };
 
-export default function TicketSelector({
-  ticketTypes,
-  quantities,
-  onQuantityChange,
-}: Props) {
-  return (
-    <div className="space-y-4">
-      {ticketTypes.map((tt) => (
-        <div
-          key={tt.id}
-          className="flex items-center justify-between rounded-xl border border-white/10 p-4"
-        >
-          <div>
-            <div className="font-semibold">{tt.name}</div>
-            <div>{formatCurrency(tt.priceCents)}</div>
-            <div>{tt.isAvailable ? `${tt.remaining} left` : "Sold Out"}</div>
-          </div>
+function formatPrice(cents?: number | null) {
+    if (cents == null) return "See details";
+    return `$${(cents / 100).toFixed(2)}`;
+}
 
-          <input
-            type="number"
-            min={0}
-            max={tt.remaining}
-            value={quantities[tt.id] || 0}
-            disabled={!tt.isAvailable}
-            onChange={(e) =>
-              onQuantityChange(tt.id, Math.max(0, Number(e.target.value || 0)))
-            }
-            className="w-20 rounded border px-2 py-1 text-black"
-          />
+export default function TicketSelector({
+    ticketTypes,
+    quantities,
+    onQuantityChange,
+}: Props) {
+    if (!ticketTypes.length) {
+        return (
+            <div className="ticket-empty-state">
+                No ticket types are available for this event yet.
+            </div>
+        );
+    }
+
+    return (
+        <div className="ticket-selector">
+            {ticketTypes.map((ticket) => {
+                const quantity = quantities[ticket.id] || 0;
+                const isAvailable = ticket.isAvailable;
+                const soldOut = !isAvailable;
+
+                return (
+                    <div
+                        key={ticket.id}
+                        className={`ticket-row ${soldOut ? "ticket-row-disabled" : ""}`}
+                    >
+                        <div className="ticket-row-top">
+                            <div className="ticket-row-info">
+                                <div className="ticket-row-name">{ticket.name}</div>
+                                <div className="ticket-row-sub">
+                                    {soldOut
+                                        ? "Sold out"
+                                        : ticket.description || "Available now"}
+                                </div>
+                            </div>
+
+                            <div className="ticket-row-price">
+                                {formatPrice(ticket.price_cents)}
+                            </div>
+                        </div>
+
+                        <div className="ticket-row-controls">
+                            <button
+                                type="button"
+                                className="ticket-stepper-btn"
+                                onClick={() =>
+                                    onQuantityChange(ticket.id, Math.max(0, quantity - 1))
+                                }
+                                disabled={soldOut || quantity <= 0}
+                                aria-label={`Decrease ${ticket.name}`}
+                            >
+                                −
+                            </button>
+
+                            <div className="ticket-qty-pill" aria-live="polite">
+                                {quantity}
+                            </div>
+
+                            <button
+                                type="button"
+                                className="ticket-stepper-btn"
+                                onClick={() => onQuantityChange(ticket.id, quantity + 1)}
+                                disabled={soldOut}
+                                aria-label={`Increase ${ticket.name}`}
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+                );
+            })}
         </div>
-      ))}
-    </div>
-  );
+    );
 }

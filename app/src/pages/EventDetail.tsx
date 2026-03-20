@@ -92,6 +92,11 @@ export default function EventDetailPage() {
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
 
+    const selectedTotalCents = ticketTypes.reduce((sum, tt) => {
+        const qty = quantities[tt.id] || 0;
+        return sum + qty * (tt.price_cents || 0);
+    }, 0);
+
     return (
         <div className="app">
             <Header />
@@ -142,7 +147,9 @@ export default function EventDetailPage() {
 
                                 <aside className="event-detail-side">
                                     <div className="event-detail-card event-detail-card-glass">
-                                        <div className="pill-label">Event Details</div>
+                                        <div className="pill-label">
+                                            Event Details
+                                        </div>
 
                                         <div className="event-detail-meta">
                                             <div>
@@ -156,8 +163,9 @@ export default function EventDetailPage() {
                                             </div>
                                             <div>
                                                 <strong>Location:</strong>{" "}
-                                                {event.venue?.city || "Amarillo"},{" "}
-                                                {event.venue?.state || "TX"}
+                                                {event.venue?.city ||
+                                                    "Amarillo"}
+                                                , {event.venue?.state || "TX"}
                                             </div>
                                             <div>
                                                 <strong>Policy:</strong>{" "}
@@ -185,19 +193,37 @@ export default function EventDetailPage() {
                                         ) : null}
 
                                         <div className="event-detail-buy-wrap">
+                                                        {selectedTotalCents > && (<div className="event-detail-total-row">
+                                                            <span>Order Total</span>
+                                                            <strong>
+                                                                $
+                                                                {(
+                                                                    selectedTotalCents / 100
+                                                                ).toFixed(2)}
+                                                            </strong>
+                                                        </div>
+                                                        )}
                                             <button
                                                 onClick={onCheckout}
                                                 disabled={
-                                                    buying || !hasAvailableTickets
+                                                    buying ||
+                                                    !hasAvailableTickets
                                                 }
-                                                className="event-detail-buy-btn"
+                                                className="event-detail-buy-btn rockwell-checkout-btn"
                                             >
                                                 {buying
-                                                    ? "Redirecting..."
+                                                    ? "Redirecting to Secure Checkout..."
                                                     : hasAvailableTickets
-                                                        ? "Buy Tickets"
-                                                        : "Sold Out"}
+                                                      ? "Secure Checkout"
+                                                      : "Sold Out"}
                                             </button>
+
+                                            {hasAvailableTickets ? (
+                                                <div className="secure-checkout-note">
+                                                    Secure checkout powered by
+                                                    Accedo Tickets
+                                                </div>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </aside>

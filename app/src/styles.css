@@ -702,3 +702,148 @@ a:hover { color: #fff; }
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
 }
+
+
+.ticket-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.ticket-row {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.035);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.ticket-row-disabled {
+    opacity: 0.65;
+}
+
+.ticket-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+}
+
+.ticket-row-info {
+    min-width: 0;
+}
+
+.ticket-row-name {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.ticket-row-sub {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    opacity: 0.72;
+    line-height: 1.35;
+}
+
+.ticket-row-price {
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ticket-row-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.ticket-stepper-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+    .ticket-stepper-btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .ticket-stepper-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+.ticket-qty-pill {
+    min-width: 48px;
+    height: 42px;
+    padding: 0 0.9rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 700;
+}
+
+.ticket-empty-state {
+    padding: 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    opacity: 0.8;
+}
+
+.rockwell-checkout-btn {
+    width: 100%;
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    background: linear-gradient(135deg, #2f8f5b, #46b978);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(46, 143, 91, 0.28);
+}
+
+    .rockwell-checkout-btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 34px rgba(46, 143, 91, 0.35);
+    }
+
+    .rockwell-checkout-btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+.secure-checkout-note {
+    margin-top: 0.7rem;
+    text-align: center;
+    font-size: 0.82rem;
+    opacity: 0.72;
+}
+
+.event-detail-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.98rem;
+}
