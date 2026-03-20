@@ -581,3 +581,52 @@ a:hover { color: #fff; }
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+
+
+.event-detail-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 0.9fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.event-detail-main,
+.event-detail-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.event-detail-poster {
+    width: 100%;
+    max-height: 640px;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+}
+
+.event-detail-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+}
+
+.event-detail-section-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.event-detail-meta {
+    display: grid;
+    gap: 0.75rem;
+}
+
+@media (max-width: 960px) {
+    .event-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}

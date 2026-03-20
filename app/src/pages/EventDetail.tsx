@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import Header from "../components/Header";
 import TicketSelector from "../components/TicketSelector";
+import SectionTitle from "../components/SectionTitle";
 import {
     createCheckoutSession,
     getEventBySlug,
@@ -34,7 +36,6 @@ export default function EventDetailPage() {
 
                 setEvent(eventData);
                 setTicketTypes(ticketData);
-                setError("");
             } catch (err: any) {
                 setError(err?.message || "Failed to load event");
                 setEvent(null);
@@ -46,7 +47,7 @@ export default function EventDetailPage() {
     }, [slug]);
 
     function onQuantityChange(ticketTypeId: string, quantity: number) {
-        setQuantities((prev: Record<string, number>) => ({
+        setQuantities((prev) => ({
             ...prev,
             [ticketTypeId]: Math.max(0, quantity),
         }));
@@ -55,13 +56,12 @@ export default function EventDetailPage() {
     async function onCheckout() {
         if (!event) return;
 
-        const items: { ticketTypeId: string; quantity: number }[] =
-            Object.entries(quantities as Record<string, number>)
-                .filter(([, quantity]) => Number(quantity) > 0)
-                .map(([ticketTypeId, quantity]) => ({
-                    ticketTypeId,
-                    quantity: Number(quantity),
-                }));
+        const items = Object.entries(quantities)
+            .filter(([, quantity]) => Number(quantity) > 0)
+            .map(([ticketTypeId, quantity]) => ({
+                ticketTypeId,
+                quantity: Number(quantity),
+            }));
 
         if (!items.length) {
             setError("Please select at least one ticket.");
@@ -92,50 +92,122 @@ export default function EventDetailPage() {
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
 
-    if (loading) return <div className="p-8">Loading event...</div>;
-    if (error && !event) return <div className="p-8">{error}</div>;
-    if (!event) return <div className="p-8">Event not found.</div>;
-
     return (
-        <section className="mx-auto max-w-5xl space-y-6 p-6">
-            {event.poster_url ? (
-                <img
-                    src={event.poster_url}
-                    alt={event.title}
-                    className="max-h-[520px] w-full rounded-2xl object-cover"
-                />
-            ) : null}
+        <div className="app">
+            <Header />
 
-            <div className="space-y-2">
-                <h1 className="text-4xl font-bold">{event.title}</h1>
-                <p>{formatDateTime(event.dateISO)}</p>
-                <p>{event.agePolicy || "See details"}</p>
-                <p>{event.venue.name}</p>
-            </div>
+            <main className="container">
+                <section className="section">
+                    <div style={{ marginBottom: "1rem" }}>
+                        <Link to="/events" className="link">
+                            ? Back to events
+                        </Link>
+                    </div>
 
-            <div>
-                <p>{event.description}</p>
-            </div>
+                    {loading ? (
+                        <div className="muted">Loading event...</div>
+                    ) : error && !event ? (
+                        <div className="muted">{error}</div>
+                    ) : !event ? (
+                        <div className="muted">Event not found.</div>
+                    ) : (
+                        <>
+                            <SectionTitle
+                                title={event.title}
+                                subtitle={`${formatDateTime(event.dateISO)} • ${event.agePolicy || "See details"}`}
+                            />
 
-            <TicketSelector
-                ticketTypes={ticketTypes}
-                quantities={quantities}
-                onQuantityChange={onQuantityChange}
-            />
+                            <div className="event-detail-grid">
+                                <div className="event-detail-main">
+                                    {event.poster_url ? (
+                                        <img
+                                            src={event.poster_url}
+                                            alt={event.title}
+                                            className="event-detail-poster"
+                                        />
+                                    ) : null}
 
-            {error ? <div>{error}</div> : null}
+                                    <div className="event-detail-card">
+                                        <h3 className="event-detail-section-title">
+                                            About this event
+                                        </h3>
+                                        <p>{event.description}</p>
+                                    </div>
+                                </div>
 
-            <button
-                onClick={onCheckout}
-                disabled={buying || !hasAvailableTickets}
-                className="rounded-xl border px-6 py-3"
-            >
-                {buying
-                    ? "Redirecting..."
-                    : hasAvailableTickets
-                      ? "Buy Tickets"
-                      : "Sold Out"}
-            </button>
-        </section>
+                                <aside className="event-detail-side">
+                                    <div className="event-detail-card">
+                                        <h3 className="event-detail-section-title">
+                                            Event details
+                                        </h3>
+
+                                        <div className="event-detail-meta">
+                                            <div>
+                                                <strong>Date:</strong> {formatDateTime(event.dateISO)}
+                                            </div>
+                                            <div>
+                                                <strong>Venue:</strong>{" "}
+                                                {event.venue?.name || "Rockwell Event Center"}
+                                            </div>
+                                            <div>
+                                                <strong>Location:</strong>{" "}
+                                                {event.venue?.city || "Amarillo"},{" "}
+                                                {event.venue?.state || "TX"}
+                                            </div>
+                                            <div>
+                                                <strong>Policy:</strong>{" "}
+                                                {event.agePolicy || "See details"}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="event-detail-card">
+                                        <h3 className="event-detail-section-title">Tickets</h3>
+
+                                        <TicketSelector
+                                            ticketTypes={ticketTypes}
+                                            quantities={quantities}
+                                            onQuantityChange={onQuantityChange}
+                                        />
+
+                                        {error ? (
+                                            <div className="muted" style={{ marginTop: "1rem" }}>
+                                                {error}
+                                            </div>
+                                        ) : null}
+
+                                        <div style={{ marginTop: "1rem" }}>
+                                            <button
+                                                onClick={onCheckout}
+                                                disabled={buying || !hasAvailableTickets}
+                                                className="btn primary"
+                                            >
+                                                {buying
+                                                    ? "Redirecting..."
+                                                    : hasAvailableTickets
+                                                        ? "Buy Tickets"
+                                                        : "Sold Out"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </aside>
+                            </div>
+                        </>
+                    )}
+                </section>
+
+                <footer className="footer">
+                    <div className="footer-left">
+                        <div className="footer-brand">Rockwell Event Center</div>
+                        <div className="muted">Amarillo, TX • Live Music • Rentals</div>
+                    </div>
+                    <div className="footer-links">
+                        <Link to="/events">Events</Link>
+                        <Link to="/book">Book</Link>
+                        <Link to="/contact">Contact</Link>
+                    </div>
+                </footer>
+            </main>
+        </div>
     );
 }
