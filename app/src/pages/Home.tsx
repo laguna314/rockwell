@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import Header from "./components/Header";
-import EventCard from "./components/EventCard";
-import Placeholder from "./components/Placeholder";
-import SectionTitle from "./components/SectionTitle";
-import { getRockwellEvents, type PublicVenueEvent } from "./lib/accedo";
+import Header from "../components/Header";
+import EventCard from "../components/EventCard";
+import Placeholder from "../components/Placeholder";
+import SectionTitle from "../components/SectionTitle";
+import { getRockwellEvents, type PublicVenueEvent } from "../lib/accedo";
 
 function formatLong(iso: string) {
     const d = new Date(iso);
