@@ -193,21 +193,25 @@ export default function EventDetailPage() {
                                         ) : null}
 
                                         <div className="event-detail-buy-wrap">
-                                                        {selectedTotalCents > && 0 (<div className="event-detail-total-row">
-                                                            <span>Order Total</span>
-                                                            <strong>
-                                                                $
-                                                                {(
-                                                                    selectedTotalCents / 100
-                                                                ).toFixed(2)}
-                                                            </strong>
-                                                        </div>
-                                                        )}
+                                            {selectedTotalCents > 0 && (
+                                                <div className="event-detail-total-row">
+                                                    <span>Order Total</span>
+                                                    <strong>
+                                                        $
+                                                        {(
+                                                            selectedTotalCents /
+                                                            100
+                                                        ).toFixed(2)}
+                                                    </strong>
+                                                </div>
+                                            )}
+
                                             <button
                                                 onClick={onCheckout}
                                                 disabled={
                                                     buying ||
-                                                    !hasAvailableTickets
+                                                    !hasAvailableTickets ||
+                                                    selectedTotalCents === 0
                                                 }
                                                 className="event-detail-buy-btn rockwell-checkout-btn"
                                             >
