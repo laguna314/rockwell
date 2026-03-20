@@ -1,142 +1,97 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
-function formatShort(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleString(undefined, {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  });
+function formatShort(iso?: string | null) {
+    if (!iso) return "Date TBA";
+
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "Date TBA";
+
+    return d.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+    });
 }
 
-export default function EventCard({ event }: any) {
-  const [open, setOpen] = useState(false);
+function formatPrice(cents?: number | null) {
+    if (cents == null) return "See details";
+    return `$${(cents / 100).toFixed(2)}`;
+}
 
-  const wristbands = !!event.alcoholWristbandsRequired;
+type EventCardProps = {
+    event: {
+        id: string;
+        slug: string;
+        title: string;
+        dateISO: string;
+        agePolicy?: string | null;
+        poster_url?: string | null;
+        startingPriceCents?: number | null;
+        hasTicketsAvailable?: boolean;
+        venue?: {
+            name?: string;
+            city?: string;
+            state?: string;
+        };
+    };
+};
 
-  const when = useMemo(() => {
-    try {
-      return formatShort(event.dateISO);
-    } catch {
-      return "Date TBA";
-    }
-  }, [event.dateISO]);
+export default function EventCard({ event }: EventCardProps) {
+    const when = useMemo(() => formatShort(event.dateISO), [event.dateISO]);
 
-  return (
-    <>
-      <article className="event-card">
-        <div className="event-media">
-          <img src={event.posterUrl} alt={event.title} loading="lazy" />
-          <div className="event-media-overlay" />
+    const venueName = event.venue?.name || "Rockwell Event Center";
+    const venueCity = event.venue?.city || "Amarillo";
+    const venueState = event.venue?.state || "TX";
 
-          <div className="event-tags">
-            <span className="tag">{when}</span>
-            {wristbands && <span className="tag tag-accent">Alcohol wristbands</span>}
-          </div>
-        </div>
+    const hasTickets = event.hasTicketsAvailable !== false;
 
-        <div className="event-body">
-          <h3 className="event-title">{event.title}</h3>
+    return (
+        <article className="event-card">
+            <div className="event-media">
+                <img
+                    src={event.poster_url || "/posters/example.jpg"}
+                    alt={event.title}
+                    loading="lazy"
+                />
+                <div className="event-media-overlay" />
 
-          <div className="event-meta">
-            <span className="meta-dot" />
-            <span>Rockwell Event Center</span>
-            <span className="meta-sep">•</span>
-            <span>Amarillo, TX</span>
-          </div>
-
-          <div className="event-actions">
-            <button className="btn primary" onClick={() => setOpen(true)}>
-              Buy Tickets
-            </button>
-            <a className="btn outline" href={`/events/${event.slug ?? ""}`}>
-              Details
-            </a>
-          </div>
-
-          {wristbands && (
-            <p className="event-note">
-              Alcohol policy: wristbands required to purchase/consume alcohol. Valid ID required for a 21+ wristband.
-            </p>
-          )}
-        </div>
-      </article>
-
-      {open && (
-        <div
-          className="checkout-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Secure checkout"
-          onMouseDown={(e) => {
-            // click outside closes
-            if (e.target === e.currentTarget) setOpen(false);
-          }}
-        >
-          <div className="checkout-sheet">
-            <div className="checkout-header">
-              <div>
-                <div className="checkout-kicker">Secure Checkout</div>
-                <div className="checkout-title">{event.title}</div>
-                <div className="checkout-sub">
-                  Ticket purchase powered by Stripe (placeholder)
+                <div className="event-tags">
+                    <span className="tag">{when}</span>
+                    {event.agePolicy ? (
+                        <span className="tag tag-accent">
+                            {event.agePolicy}
+                        </span>
+                    ) : null}
                 </div>
-              </div>
-              <button className="icon-btn" onClick={() => setOpen(false)} aria-label="Close">
-                ✕
-              </button>
             </div>
 
-            <div className="checkout-grid">
-              <div className="checkout-left">
-                <div className="summary">
-                  <div className="summary-row">
-                    <span className="muted">Date</span>
-                    <span>{event.dateISO ? new Date(event.dateISO).toLocaleString() : "TBA"}</span>
-                  </div>
-                  <div className="summary-row">
-                    <span className="muted">Venue</span>
-                    <span>Rockwell Event Center</span>
-                  </div>
-                  {wristbands && (
-                    <div className="summary-note">
-                      Wristbands required for alcohol. Valid ID required for 21+ wristband.
-                    </div>
-                  )}
+            <div className="event-body">
+                <h3 className="event-title">{event.title}</h3>
+
+                <div className="event-meta">
+                    <span className="meta-dot" />
+                    <span>{venueName}</span>
+                    <span className="meta-sep">•</span>
+                    <span>
+                        {venueCity}, {venueState}
+                    </span>
                 </div>
 
-                <div className="poster-mini">
-                  <img src={event.posterUrl} alt={`${event.title} poster`} />
-                </div>
-              </div>
-
-              <div className="checkout-right">
-                {/* STRIPE PLACEHOLDER AREA */}
-                <div className="stripe-shell">
-                  <div className="stripe-title">Payment</div>
-                  <div className="stripe-ph">
-                    [Stripe Payment Element mounts here]
-                  </div>
-                  <div className="stripe-ph small">[Email / billing fields]</div>
-                  <div className="stripe-ph small">[Pay button]</div>
-                  <div className="stripe-foot">
-                    This is a placeholder. Replace with your Payment Element + confirmPayment flow.
-                  </div>
+                <div className="event-price">
+                    Starting at {formatPrice(event.startingPriceCents)}
                 </div>
 
-                <div className="checkout-actions">
-                  <button className="btn outline" onClick={() => setOpen(false)}>
-                    Cancel
-                  </button>
-                  <button className="btn primary" onClick={() => setOpen(false)}>
-                    Close Placeholder
-                  </button>
+                <div className="event-actions">
+                    <Link className="btn primary" to={`/events/${event.slug}`}>
+                        {hasTickets ? "Buy Tickets" : "View Event"}
+                    </Link>
+
+                    <Link className="btn outline" to={`/events/${event.slug}`}>
+                        Details
+                    </Link>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+        </article>
+    );
 }

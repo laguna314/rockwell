@@ -1,0 +1,27 @@
+/app
+    /public
+        /posters
+            example.jpg
+        /venue
+            hero.png
+        Rockwell-01.png
+    /src
+        /components
+            EventCard.tsx
+            Header.tsx
+            Placeholder.tsx
+            SectionTitle.tsx
+        /lib
+        /pages
+        App.tsx
+        main.tsx
+        styles.css
+    index.html
+/worker
+    /src
+        index.ts
+.gitignore
+package.json
+tsconfig.json
+vite.config.ts
+wrangler.toml
