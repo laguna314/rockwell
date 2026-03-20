@@ -151,8 +151,8 @@ export default function App() {
             <main className="container">
                 <section className="stats">
                     <div className="stat">
-                        <div className="stat-num">• • •</div>
-                        <div className="stat-label">Capacity (placeholder)</div>
+                        <div className="stat-num">Flexible</div>
+                        <div className="stat-label">Multiple Rooms</div>
                     </div>
                     <div className="stat">
                         <div className="stat-num">Pro</div>
@@ -161,7 +161,7 @@ export default function App() {
                     <div className="stat">
                         <div className="stat-num">Amarillo</div>
                         <div className="stat-label">
-                            Local scene • Touring acts
+                            Local scene + Touring acts
                         </div>
                     </div>
                 </section>
@@ -276,11 +276,10 @@ export default function App() {
                         </div>
                         <div className="feature">
                             <div className="feature-title">
-                                Age policies per event
+                                BYOB Policy
                             </div>
                             <div className="feature-text">
-                                Age restrictions and event policies are shown
-                                directly on each event listing.
+                                Alcohol is generally permitted, check event details to be sure.
                             </div>
                         </div>
                         <div className="feature">
@@ -288,7 +287,7 @@ export default function App() {
                                 Parking / location
                             </div>
                             <div className="feature-text">
-                                Add real parking/location info here.
+                                Park anywhere around the building, or we offer gated parking for select events.
                                 <span className="muted"> (placeholder)</span>
                             </div>
                         </div>
@@ -328,8 +327,8 @@ export default function App() {
 
                             <div className="rentals-bullets">
                                 <div>• Flexible setup options</div>
-                                <div>• Staffed events (placeholder)</div>
-                                <div>• Add-ons available (placeholder)</div>
+                                <div>• Staffed events</div>
+                                <div>• Ask about other amenities</div>
                             </div>
                         </div>
 
@@ -365,7 +364,7 @@ export default function App() {
                 <section className="section">
                     <SectionTitle
                         title="What people say"
-                        subtitle="Drop real quotes reviews here when you have them."
+                        subtitle="Need real quotes here from real people"
                     />
                     <div className="quotes">
                         <div className="quote">
@@ -392,7 +391,7 @@ export default function App() {
                 <section className="section">
                     <SectionTitle
                         title="Find Rockwell"
-                        subtitle="Add address, map embed, parking notes, and contact info here."
+                        subtitle="On the east side of I27, take the Rockwell Rd. exit from either direction."
                     />
                     <div className="find">
                         <div className="find-card">
