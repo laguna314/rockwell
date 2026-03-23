@@ -23,7 +23,7 @@ function calculateSubtotalCents(
 ) {
     return ticketTypes.reduce((sum, tt) => {
         const qty = quantities[tt.id] || 0;
-        const price = tt.price_cents ?? 0;
+        const price = tt.priceCents ?? 0;
         return sum + price * qty;
     }, 0);
 }
@@ -62,7 +62,7 @@ export default function TicketSelector({
         <div className="ticket-selector">
             {ticketTypes.map((tt) => {
                 const qty = quantities[tt.id] || 0;
-                const price = tt.price_cents ?? 0;
+                const price = tt.priceCents ?? 0;
 
                 return (
                     <div key={tt.id} className="ticket-row">
