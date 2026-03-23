@@ -9,6 +9,7 @@ type FormState = {
     preferredDate: string;
     guestCount: string;
     message: string;
+    website: string;
 };
 
 const initialState: FormState = {
@@ -20,6 +21,7 @@ const initialState: FormState = {
     preferredDate: "",
     guestCount: "",
     message: "",
+    website: "",
 };
 
 export default function Contact() {
@@ -36,10 +38,10 @@ export default function Contact() {
         form.inquiryType === "show"
             ? "Tell us about the artist, genre, expected draw, preferred date, and any production needs."
             : form.inquiryType === "private"
-              ? "Tell us about the occasion, preferred date, estimated attendance, and anything else we should know."
-              : form.inquiryType === "corporate"
-                ? "Tell us about your company, event goals, preferred date, setup needs, and guest count."
-                : "How can we help?";
+                ? "Tell us about the occasion, preferred date, estimated attendance, and anything else we should know."
+                : form.inquiryType === "corporate"
+                    ? "Tell us about your company, event goals, preferred date, setup needs, and guest count."
+                    : "How can we help?";
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -66,10 +68,11 @@ export default function Contact() {
                 "Thanks! Your message has been sent. We’ll be in touch soon."
             );
             setForm(initialState);
-        } catch (err) {
+        } catch (err: unknown) {
             setError(
-                err?.message ||
-                    "Something went wrong while sending your inquiry."
+                err instanceof Error
+                    ? err.message
+                    : "Something went wrong while sending your inquiry."
             );
         } finally {
             setLoading(false);
@@ -93,11 +96,25 @@ export default function Contact() {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-1 gap-5 md:grid-cols-2"
                 >
+                    <input
+                        type="text"
+                        value={form.website}
+                        onChange={(e) => update("website", e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        className="hidden"
+                    />
+
                     <div className="md:col-span-2">
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="inquiryType"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Inquiry Type
                         </label>
                         <select
+                            id="inquiryType"
                             value={form.inquiryType}
                             onChange={(e) =>
                                 update("inquiryType", e.target.value)
@@ -112,10 +129,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="fullName"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Full Name
                         </label>
                         <input
+                            id="fullName"
                             type="text"
                             required
                             value={form.fullName}
@@ -126,10 +147,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="email"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Email
                         </label>
                         <input
+                            id="email"
                             type="email"
                             required
                             value={form.email}
@@ -140,10 +165,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="phone"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Phone
                         </label>
                         <input
+                            id="phone"
                             type="tel"
                             value={form.phone}
                             onChange={(e) => update("phone", e.target.value)}
@@ -153,10 +182,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="organization"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Organization / Company
                         </label>
                         <input
+                            id="organization"
                             type="text"
                             value={form.organization}
                             onChange={(e) =>
@@ -168,10 +201,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="preferredDate"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Preferred Event Date
                         </label>
                         <input
+                            id="preferredDate"
                             type="date"
                             value={form.preferredDate}
                             onChange={(e) =>
@@ -182,10 +219,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="guestCount"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Estimated Guest Count
                         </label>
                         <input
+                            id="guestCount"
                             type="number"
                             min="1"
                             value={form.guestCount}
@@ -198,10 +239,14 @@ export default function Contact() {
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className="mb-2 block text-sm font-medium">
+                        <label
+                            htmlFor="message"
+                            className="mb-2 block text-sm font-medium"
+                        >
                             Message
                         </label>
                         <textarea
+                            id="message"
                             required
                             rows={6}
                             value={form.message}
