@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Header from "../components/Header";
 import TicketSelector from "../components/TicketSelector";
 import SectionTitle from "../components/SectionTitle";
 import {
@@ -99,7 +98,6 @@ export default function EventDetailPage() {
 
     return (
         <div className="app">
-            <Header />
 
             <main className="container">
                 <section className="section">
