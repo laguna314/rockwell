@@ -1,12 +1,12 @@
 import type { PublicTicketType } from "../lib/accedo";
+import type { OrderPricing } from "../lib/pricing";
 
 type Props = {
     ticketTypes: PublicTicketType[];
     quantities: Record<string, number>;
     onQuantityChange: (ticketTypeId: string, quantity: number) => void;
+    pricing: OrderPricing;
 };
-
-const SERVICE_FEE_CENTS = 125;
 
 function formatPrice(cents?: number | null) {
     if (cents == null) return "$0.00";
@@ -17,52 +17,21 @@ function clampQuantity(qty: number) {
     return Math.max(0, qty);
 }
 
-function calculateSubtotalCents(
-    ticketTypes: PublicTicketType[],
-    quantities: Record<string, number>
-) {
-    return ticketTypes.reduce((sum, tt) => {
-        const qty = quantities[tt.id] || 0;
-        const price = tt.priceCents ?? 0;
-        return sum + price * qty;
-    }, 0);
-}
-
-function calculateTicketCount(quantities: Record<string, number>) {
-    return Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
-}
-
-function calculateProcessingFeeCents(
-    baseSubtotalCents: number,
-    serviceFeeCents: number
-) {
-    const preProcessingCents = baseSubtotalCents + serviceFeeCents;
-    if (preProcessingCents <= 0) return 0;
-
-    return Math.ceil((0.029 * preProcessingCents + 30) / (1 - 0.029));
-}
-
 export default function TicketSelector({
     ticketTypes,
     quantities,
     onQuantityChange,
+    pricing,
 }: Props) {
-    const subtotalCents = calculateSubtotalCents(ticketTypes, quantities);
-    const ticketCount = calculateTicketCount(quantities);
-    const serviceFeeCents = ticketCount * SERVICE_FEE_CENTS;
-
-    const processingFeeCents = calculateProcessingFeeCents(
-        subtotalCents,
-        serviceFeeCents
-    );
-
-    const totalCents = subtotalCents + serviceFeeCents + processingFeeCents;
+    const { subtotalCents, serviceFeeCents, processingFeeCents, totalCents } =
+        pricing;
 
     return (
         <div className="ticket-selector">
             {ticketTypes.map((tt) => {
                 const qty = quantities[tt.id] || 0;
                 const price = tt.priceCents ?? 0;
+                const lineTotalCents = price * qty;
 
                 return (
                     <div key={tt.id} className="ticket-row">
@@ -78,6 +47,13 @@ export default function TicketSelector({
                                             {tt.description}
                                         </div>
                                     )}
+
+                                    {qty > 0 && (
+                                        <div className="ticket-row-line-total">
+                                            {qty} × {formatPrice(price)} ={" "}
+                                            {formatPrice(lineTotalCents)}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="ticket-row-price">
@@ -87,6 +63,7 @@ export default function TicketSelector({
 
                             <div className="ticket-row-controls">
                                 <button
+                                    type="button"
                                     className="ticket-stepper-btn"
                                     onClick={() =>
                                         onQuantityChange(
@@ -99,11 +76,10 @@ export default function TicketSelector({
                                     −
                                 </button>
 
-                                <div className="ticket-qty-pill">
-                                    {qty}
-                                </div>
+                                <div className="ticket-qty-pill">{qty}</div>
 
                                 <button
+                                    type="button"
                                     className="ticket-stepper-btn"
                                     onClick={() =>
                                         onQuantityChange(tt.id, qty + 1)
@@ -117,7 +93,6 @@ export default function TicketSelector({
                 );
             })}
 
-            {/* SUMMARY */}
             {totalCents > 0 && (
                 <div className="event-detail-card event-detail-card-glass">
                     <div className="summary-row">

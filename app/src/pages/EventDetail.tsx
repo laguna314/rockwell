@@ -10,6 +10,7 @@ import {
     type PublicTicketType,
 } from "../lib/accedo";
 import { formatDateTime } from "../lib/format";
+import { calculateOrderPricing } from "../lib/pricing";
 
 export default function EventDetailPage() {
     const { slug = "" } = useParams();
@@ -90,15 +91,10 @@ export default function EventDetailPage() {
     }
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
-
-    const selectedTotalCents = ticketTypes.reduce((sum, tt) => {
-        const qty = quantities[tt.id] || 0;
-        return sum + qty * (tt.priceCents || 0);
-    }, 0);
+    const pricing = calculateOrderPricing(ticketTypes, quantities);
 
     return (
         <div className="app">
-
             <main className="container">
                 <section className="section">
                     <div style={{ marginBottom: "1rem" }}>
@@ -182,6 +178,7 @@ export default function EventDetailPage() {
                                             ticketTypes={ticketTypes}
                                             quantities={quantities}
                                             onQuantityChange={onQuantityChange}
+                                            pricing={pricing}
                                         />
 
                                         {error ? (
@@ -191,25 +188,12 @@ export default function EventDetailPage() {
                                         ) : null}
 
                                         <div className="event-detail-buy-wrap">
-                                            {selectedTotalCents > 0 && (
-                                                <div className="event-detail-total-row">
-                                                    <span>Order Total</span>
-                                                    <strong>
-                                                        $
-                                                        {(
-                                                            selectedTotalCents /
-                                                            100
-                                                        ).toFixed(2)}
-                                                    </strong>
-                                                </div>
-                                            )}
-
                                             <button
                                                 onClick={onCheckout}
                                                 disabled={
                                                     buying ||
                                                     !hasAvailableTickets ||
-                                                    selectedTotalCents === 0
+                                                    pricing.totalCents === 0
                                                 }
                                                 className="event-detail-buy-btn rockwell-checkout-btn"
                                             >
