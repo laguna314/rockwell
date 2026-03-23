@@ -32,21 +32,13 @@ function calculateTicketCount(quantities: Record<string, number>) {
     return Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
 }
 
-/**
- * Stripe standard estimate:
- * 2.9% + $0.30 per order
- *
- * We calculate processing against:
- * base subtotal + service fee
- *
- * Then round up to the nearest cent so you don't under-collect.
- */
 function calculateProcessingFeeCents(
     baseSubtotalCents: number,
     serviceFeeCents: number
 ) {
     const preProcessingCents = baseSubtotalCents + serviceFeeCents;
     if (preProcessingCents <= 0) return 0;
+
     return Math.ceil((0.029 * preProcessingCents + 30) / (1 - 0.029));
 }
 
@@ -59,25 +51,28 @@ export default function TicketSelector({
     const ticketCount = calculateTicketCount(quantities);
     const serviceFeeCents = ticketCount * SERVICE_FEE_CENTS;
 
-    // Processing is based on the amount being charged.
-    // If you're charging base + service fee, calculate Stripe on that.
     const processingFeeCents = calculateProcessingFeeCents(
-        subtotalCents + serviceFeeCents
+        subtotalCents,
+        serviceFeeCents
     );
 
     const totalCents = subtotalCents + serviceFeeCents + processingFeeCents;
 
     return (
         <div className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/10">
-                {ticketTypes.map((tt) => {
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
+                {ticketTypes.map((tt, index) => {
                     const qty = quantities[tt.id] || 0;
                     const basePriceCents = tt.price_cents ?? 0;
 
                     return (
                         <div
                             key={tt.id}
-                            className="flex items-center justify-between gap-4 px-4 py-4"
+                            className={`flex items-center justify-between gap-4 px-4 py-4 ${
+                                index !== ticketTypes.length - 1
+                                    ? "border-b border-white/10"
+                                    : ""
+                            }`}
                         >
                             <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-3">
@@ -139,17 +134,19 @@ export default function TicketSelector({
                         <span>{formatPrice(subtotalCents)}</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/80">
+                    <div className="my-2 border-t border-white/10" />
+
+                    <div className="flex items-center justify-between text-white/70">
                         <span>Platform Fee</span>
                         <span>{formatPrice(serviceFeeCents)}</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/80">
+                    <div className="flex items-center justify-between text-white/70">
                         <span>Processing Fee</span>
                         <span>{formatPrice(processingFeeCents)}</span>
                     </div>
 
-                    <div className="my-2 border-t border-white/10" />
+                    <div className="pt-2 border-t border-white/10" />
 
                     <div className="flex items-center justify-between text-base font-semibold text-white">
                         <span>Total</span>
