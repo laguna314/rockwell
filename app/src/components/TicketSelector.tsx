@@ -30,6 +30,9 @@ export default function TicketSelector({
                 const quantity = quantities[ticket.id] || 0;
                 const isAvailable = ticket.isAvailable;
                 const soldOut = !isAvailable;
+                const unitPrice = ticket.price_cents ?? null;
+                const lineTotal =
+                    unitPrice != null ? unitPrice * quantity : null;
 
                 return (
                     <div
@@ -39,15 +42,30 @@ export default function TicketSelector({
                         <div className="ticket-row-top">
                             <div className="ticket-row-info">
                                 <div className="ticket-row-name">{ticket.name}</div>
+
                                 <div className="ticket-row-sub">
                                     {soldOut
                                         ? "Sold out"
                                         : ticket.description || "Available now"}
                                 </div>
+
+                                {!soldOut ? (
+                                    <div className="ticket-row-pricing">
+                                        <div className="ticket-row-price-each">
+                                            {formatPrice(unitPrice)} each
+                                        </div>
+
+                                        {quantity > 0 && lineTotal != null ? (
+                                            <div className="ticket-row-line-total">
+                                                {quantity} selected • {formatPrice(lineTotal)} total
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                ) : null}
                             </div>
 
                             <div className="ticket-row-price">
-                                {formatPrice(ticket.price_cents)}
+                                {soldOut ? "Sold out" : formatPrice(unitPrice)}
                             </div>
                         </div>
 

@@ -772,6 +772,23 @@ a:hover { color: #fff; }
     white-space: nowrap;
 }
 
+.ticket-row-pricing {
+    margin-top: 0.5rem;
+    display: grid;
+    gap: 0.2rem;
+}
+
+.ticket-row-price-each {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.ticket-row-line-total {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.68);
+}
+
 .ticket-row-controls {
     display: flex;
     align-items: center;
@@ -1096,3 +1113,4 @@ a:hover { color: #fff; }
     opacity: 0;
     pointer-events: none;
 }
+
