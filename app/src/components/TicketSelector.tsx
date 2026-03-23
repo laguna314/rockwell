@@ -41,9 +41,13 @@ function calculateTicketCount(quantities: Record<string, number>) {
  *
  * Then round up to the nearest cent so you don't under-collect.
  */
-function calculateProcessingFeeCents(chargeAmountCents: number) {
-    if (chargeAmountCents <= 0) return 0;
-    return Math.ceil(chargeAmountCents * 0.029 + 30);
+function calculateProcessingFeeCents(
+    baseSubtotalCents: number,
+    serviceFeeCents: number
+) {
+    const preProcessingCents = baseSubtotalCents + serviceFeeCents;
+    if (preProcessingCents <= 0) return 0;
+    return Math.ceil((0.029 * preProcessingCents + 30) / (1 - 0.029));
 }
 
 export default function TicketSelector({
