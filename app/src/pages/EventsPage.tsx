@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import SectionTitle from "../components/SectionTitle";
 import Placeholder from "../components/Placeholder";
-import Header from "../components/Header";
 import { getRockwellEvents, type PublicVenueEvent } from "../lib/accedo";
 
 export default function EventsPage() {
@@ -22,7 +21,6 @@ export default function EventsPage() {
 
     return (
         <div className="app">
-            <Header />
 
             <main className="container">
                 <section className="section">
