@@ -38,10 +38,10 @@ export default function Contact() {
         form.inquiryType === "show"
             ? "Tell us about the artist, genre, expected draw, preferred date, and any production needs."
             : form.inquiryType === "private"
-                ? "Tell us about the occasion, preferred date, estimated attendance, and anything else we should know."
-                : form.inquiryType === "corporate"
-                    ? "Tell us about your company, event goals, preferred date, setup needs, and guest count."
-                    : "How can we help?";
+              ? "Tell us about the occasion, preferred date, estimated attendance, and anything else we should know."
+              : form.inquiryType === "corporate"
+                ? "Tell us about your company, event goals, preferred date, setup needs, and guest count."
+                : "How can we help?";
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -80,205 +80,232 @@ export default function Contact() {
     }
 
     return (
-        <section className="mx-auto max-w-4xl px-6 py-14">
-            <div className="mb-8">
-                <h1 className="text-4xl font-bold">
-                    Contact Rockwell Event Center
-                </h1>
-                <p className="mt-3 max-w-2xl text-base opacity-80">
-                    Have a question or want to rent the venue? Send us a message
-                    below.
-                </p>
-            </div>
+        <main className="container">
+            <section className="section contact-page">
+                <div className="contact-hero">
+                    <div className="pill-label">Rockwell Event Center</div>
+                    <h1 className="contact-title">Contact & Rental Inquiry</h1>
+                    <p className="contact-subtitle">
+                        Have a question or want to rent the venue for a show,
+                        private event, or corporate gathering? Send us the
+                        details below and we’ll get back to you.
+                    </p>
+                </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <form
-                    onSubmit={handleSubmit}
-                    className="grid grid-cols-1 gap-5 md:grid-cols-2"
-                >
-                    <input
-                        type="text"
-                        value={form.website}
-                        onChange={(e) => update("website", e.target.value)}
-                        tabIndex={-1}
-                        autoComplete="off"
-                        aria-hidden="true"
-                        className="hidden"
-                    />
+                <div className="contact-layout">
+                    <div className="contact-card contact-card-glass">
+                        <form onSubmit={handleSubmit} className="contact-form">
+                            <input
+                                type="text"
+                                value={form.website}
+                                onChange={(e) =>
+                                    update("website", e.target.value)
+                                }
+                                tabIndex={-1}
+                                autoComplete="off"
+                                aria-hidden="true"
+                                className="contact-honeypot"
+                            />
 
-                    <div className="md:col-span-2">
-                        <label
-                            htmlFor="inquiryType"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Inquiry Type
-                        </label>
-                        <select
-                            id="inquiryType"
-                            value={form.inquiryType}
-                            onChange={(e) =>
-                                update("inquiryType", e.target.value)
-                            }
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                        >
-                            <option value="show">Book a Show</option>
-                            <option value="private">Private Event</option>
-                            <option value="corporate">Corporate Event</option>
-                            <option value="general">General Question</option>
-                        </select>
+                            <div className="contact-form-grid">
+                                <div className="contact-field contact-field-full">
+                                    <label htmlFor="inquiryType">
+                                        Inquiry Type
+                                    </label>
+                                    <select
+                                        id="inquiryType"
+                                        value={form.inquiryType}
+                                        onChange={(e) =>
+                                            update(
+                                                "inquiryType",
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value="show">
+                                            Book a Show
+                                        </option>
+                                        <option value="private">
+                                            Private Event
+                                        </option>
+                                        <option value="corporate">
+                                            Corporate Event
+                                        </option>
+                                        <option value="general">
+                                            General Question
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="fullName">Full Name</label>
+                                    <input
+                                        id="fullName"
+                                        type="text"
+                                        required
+                                        value={form.fullName}
+                                        onChange={(e) =>
+                                            update("fullName", e.target.value)
+                                        }
+                                        placeholder="Your name"
+                                    />
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="email">Email</label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        value={form.email}
+                                        onChange={(e) =>
+                                            update("email", e.target.value)
+                                        }
+                                        placeholder="you@example.com"
+                                    />
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="phone">Phone</label>
+                                    <input
+                                        id="phone"
+                                        type="tel"
+                                        value={form.phone}
+                                        onChange={(e) =>
+                                            update("phone", e.target.value)
+                                        }
+                                        placeholder="Optional"
+                                    />
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="organization">
+                                        Organization / Company
+                                    </label>
+                                    <input
+                                        id="organization"
+                                        type="text"
+                                        value={form.organization}
+                                        onChange={(e) =>
+                                            update(
+                                                "organization",
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Optional"
+                                    />
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="preferredDate">
+                                        Preferred Event Date
+                                    </label>
+                                    <input
+                                        id="preferredDate"
+                                        type="date"
+                                        value={form.preferredDate}
+                                        onChange={(e) =>
+                                            update(
+                                                "preferredDate",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+
+                                <div className="contact-field">
+                                    <label htmlFor="guestCount">
+                                        Estimated Guest Count
+                                    </label>
+                                    <input
+                                        id="guestCount"
+                                        type="number"
+                                        min="1"
+                                        value={form.guestCount}
+                                        onChange={(e) =>
+                                            update("guestCount", e.target.value)
+                                        }
+                                        placeholder="Optional"
+                                    />
+                                </div>
+
+                                <div className="contact-field contact-field-full">
+                                    <label htmlFor="message">Message</label>
+                                    <textarea
+                                        id="message"
+                                        required
+                                        rows={7}
+                                        value={form.message}
+                                        onChange={(e) =>
+                                            update("message", e.target.value)
+                                        }
+                                        placeholder={messagePlaceholder}
+                                    />
+                                </div>
+                            </div>
+
+                            {success ? (
+                                <div className="contact-alert contact-alert-success">
+                                    {success}
+                                </div>
+                            ) : null}
+
+                            {error ? (
+                                <div className="contact-alert contact-alert-error">
+                                    {error}
+                                </div>
+                            ) : null}
+
+                            <div className="contact-actions">
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="btn primary"
+                                >
+                                    {loading ? "Sending..." : "Send Inquiry"}
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="fullName"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Full Name
-                        </label>
-                        <input
-                            id="fullName"
-                            type="text"
-                            required
-                            value={form.fullName}
-                            onChange={(e) => update("fullName", e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder="Your name"
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Email
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            required
-                            value={form.email}
-                            onChange={(e) => update("email", e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder="you@example.com"
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="phone"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Phone
-                        </label>
-                        <input
-                            id="phone"
-                            type="tel"
-                            value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder="Optional"
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="organization"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Organization / Company
-                        </label>
-                        <input
-                            id="organization"
-                            type="text"
-                            value={form.organization}
-                            onChange={(e) =>
-                                update("organization", e.target.value)
-                            }
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder="Optional"
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="preferredDate"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Preferred Event Date
-                        </label>
-                        <input
-                            id="preferredDate"
-                            type="date"
-                            value={form.preferredDate}
-                            onChange={(e) =>
-                                update("preferredDate", e.target.value)
-                            }
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            htmlFor="guestCount"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Estimated Guest Count
-                        </label>
-                        <input
-                            id="guestCount"
-                            type="number"
-                            min="1"
-                            value={form.guestCount}
-                            onChange={(e) =>
-                                update("guestCount", e.target.value)
-                            }
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder="Optional"
-                        />
-                    </div>
-
-                    <div className="md:col-span-2">
-                        <label
-                            htmlFor="message"
-                            className="mb-2 block text-sm font-medium"
-                        >
-                            Message
-                        </label>
-                        <textarea
-                            id="message"
-                            required
-                            rows={6}
-                            value={form.message}
-                            onChange={(e) => update("message", e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3"
-                            placeholder={messagePlaceholder}
-                        />
-                    </div>
-
-                    {success ? (
-                        <div className="md:col-span-2 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm">
-                            {success}
+                    <aside className="contact-side">
+                        <div className="find-card">
+                            <div className="find-title">What to send us</div>
+                            <div className="contact-side-list muted">
+                                <div>• Type of event or question</div>
+                                <div>• Preferred date or timeframe</div>
+                                <div>• Estimated attendance</div>
+                                <div>
+                                    • Artist, company, or occasion details
+                                </div>
+                                <div>• Any setup or production needs</div>
+                            </div>
                         </div>
-                    ) : null}
 
-                    {error ? (
-                        <div className="md:col-span-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm">
-                            {error}
+                        <div className="find-card">
+                            <div className="find-title">Best for</div>
+                            <div className="contact-badges">
+                                <span className="badge">Live Shows</span>
+                                <span className="badge">Private Events</span>
+                                <span className="badge badge-accent">
+                                    Corporate Events
+                                </span>
+                                <span className="badge">
+                                    Community Gatherings
+                                </span>
+                            </div>
                         </div>
-                    ) : null}
 
-                    <div className="md:col-span-2">
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="rounded-xl bg-red-700 px-6 py-3 font-semibold text-white transition hover:bg-red-600 disabled:opacity-60"
-                        >
-                            {loading ? "Sending..." : "Send Inquiry"}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </section>
+                        <div className="rentals-photo">
+                            <img
+                                src="/venue/rockwell5.jpg"
+                                alt="Rockwell Event Center interior"
+                                loading="lazy"
+                            />
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </main>
     );
 }
