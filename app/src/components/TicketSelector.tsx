@@ -7,7 +7,7 @@ type Props = {
 };
 
 function formatPrice(cents?: number | null) {
-    if (cents == null) return "See details";
+    if (typeof cents !== "number") return "";
     return `$${(cents / 100).toFixed(2)}`;
 }
 
@@ -28,44 +28,33 @@ export default function TicketSelector({
         <div className="ticket-selector">
             {ticketTypes.map((ticket) => {
                 const quantity = quantities[ticket.id] || 0;
-                const isAvailable = ticket.isAvailable;
-                const soldOut = !isAvailable;
-                const unitPrice = ticket.price_cents ?? null;
-                const lineTotal =
-                    unitPrice != null ? unitPrice * quantity : null;
+                const soldOut = !ticket.isAvailable;
 
                 return (
                     <div
                         key={ticket.id}
-                        className={`ticket-row ${soldOut ? "ticket-row-disabled" : ""}`}
+                        className={`ticket-row ticket-row-inline ${soldOut ? "ticket-row-disabled" : ""}`}
                     >
-                        <div className="ticket-row-top">
-                            <div className="ticket-row-info">
-                                <div className="ticket-row-name">{ticket.name}</div>
-
-                                <div className="ticket-row-sub">
-                                    {soldOut
-                                        ? "Sold out"
-                                        : ticket.description || "Available now"}
+                        <div className="ticket-row-main">
+                            <div className="ticket-row-name-wrap">
+                                <div className="ticket-row-name">
+                                    {ticket.name}
                                 </div>
-
-                                {!soldOut ? (
-                                    <div className="ticket-row-pricing">
-                                        <div className="ticket-row-price-each">
-                                            {formatPrice(unitPrice)} each
-                                        </div>
-
-                                        {quantity > 0 && lineTotal != null ? (
-                                            <div className="ticket-row-line-total">
-                                                {quantity} selected • {formatPrice(lineTotal)} total
-                                            </div>
-                                        ) : null}
+                                {ticket.description && !soldOut ? (
+                                    <div className="ticket-row-sub">
+                                        {ticket.description}
+                                    </div>
+                                ) : soldOut ? (
+                                    <div className="ticket-row-sub">
+                                        Sold out
                                     </div>
                                 ) : null}
                             </div>
 
                             <div className="ticket-row-price">
-                                {soldOut ? "Sold out" : formatPrice(unitPrice)}
+                                {soldOut
+                                    ? "Sold out"
+                                    : formatPrice(ticket.priceCents)}
                             </div>
                         </div>
 
@@ -74,7 +63,10 @@ export default function TicketSelector({
                                 type="button"
                                 className="ticket-stepper-btn"
                                 onClick={() =>
-                                    onQuantityChange(ticket.id, Math.max(0, quantity - 1))
+                                    onQuantityChange(
+                                        ticket.id,
+                                        Math.max(0, quantity - 1)
+                                    )
                                 }
                                 disabled={soldOut || quantity <= 0}
                                 aria-label={`Decrease ${ticket.name}`}
@@ -89,7 +81,9 @@ export default function TicketSelector({
                             <button
                                 type="button"
                                 className="ticket-stepper-btn"
-                                onClick={() => onQuantityChange(ticket.id, quantity + 1)}
+                                onClick={() =>
+                                    onQuantityChange(ticket.id, quantity + 1)
+                                }
                                 disabled={soldOut}
                                 aria-label={`Increase ${ticket.name}`}
                             >
