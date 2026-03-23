@@ -3,7 +3,7 @@ main = "worker/src/worker.js"
 compatibility_date = "2025-01-01"
 
 [vars]
-CONTACT_TO_EMAIL = "janaya.nc@gmail.com"
+CONTACT_TO_EMAIL = "rockwelleventcenter@gmail.com"
 CONTACT_FROM_EMAIL = "noreply@rockwelleventcenter.com"
 
 [assets]
