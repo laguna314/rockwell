@@ -59,42 +59,35 @@ export default function TicketSelector({
     const totalCents = subtotalCents + serviceFeeCents + processingFeeCents;
 
     return (
-        <div className="space-y-4">
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
-                {ticketTypes.map((tt, index) => {
-                    const qty = quantities[tt.id] || 0;
-                    const basePriceCents = tt.price_cents ?? 0;
+        <div className="ticket-selector">
+            {ticketTypes.map((tt) => {
+                const qty = quantities[tt.id] || 0;
+                const price = tt.price_cents ?? 0;
 
-                    return (
-                        <div
-                            key={tt.id}
-                            className={`flex items-center justify-between gap-4 px-4 py-4 ${
-                                index !== ticketTypes.length - 1
-                                    ? "border-b border-white/10"
-                                    : ""
-                            }`}
-                        >
-                            <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-3">
-                                    <span className="truncate text-sm font-semibold text-white">
+                return (
+                    <div key={tt.id} className="ticket-row">
+                        <div className="ticket-row-inline">
+                            <div className="ticket-row-main">
+                                <div className="ticket-row-name-wrap">
+                                    <div className="ticket-row-name">
                                         {tt.name}
-                                    </span>
-                                    <span className="whitespace-nowrap text-sm text-white/75">
-                                        {formatPrice(basePriceCents)}
-                                    </span>
+                                    </div>
+
+                                    {tt.description && (
+                                        <div className="ticket-row-sub">
+                                            {tt.description}
+                                        </div>
+                                    )}
                                 </div>
 
-                                {tt.description ? (
-                                    <p className="mt-1 text-xs text-white/50">
-                                        {tt.description}
-                                    </p>
-                                ) : null}
+                                <div className="ticket-row-price">
+                                    {formatPrice(price)}
+                                </div>
                             </div>
 
-                            <div className="flex shrink-0 items-center gap-2">
+                            <div className="ticket-row-controls">
                                 <button
-                                    type="button"
-                                    className="h-9 w-9 rounded-full border border-white/15 bg-white/5 text-lg text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                                    className="ticket-stepper-btn"
                                     onClick={() =>
                                         onQuantityChange(
                                             tt.id,
@@ -102,58 +95,52 @@ export default function TicketSelector({
                                         )
                                     }
                                     disabled={qty <= 0}
-                                    aria-label={`Decrease ${tt.name}`}
                                 >
                                     −
                                 </button>
 
-                                <div className="w-8 text-center text-sm font-medium text-white">
+                                <div className="ticket-qty-pill">
                                     {qty}
                                 </div>
 
                                 <button
-                                    type="button"
-                                    className="h-9 w-9 rounded-full border border-white/15 bg-white/5 text-lg text-white transition hover:bg-white/10"
+                                    className="ticket-stepper-btn"
                                     onClick={() =>
                                         onQuantityChange(tt.id, qty + 1)
                                     }
-                                    aria-label={`Increase ${tt.name}`}
                                 >
                                     +
                                 </button>
                             </div>
                         </div>
-                    );
-                })}
-            </div>
+                    </div>
+                );
+            })}
 
-            <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
-                <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between text-white/80">
+            {/* SUMMARY */}
+            {totalCents > 0 && (
+                <div className="event-detail-card event-detail-card-glass">
+                    <div className="summary-row">
                         <span>Tickets</span>
                         <span>{formatPrice(subtotalCents)}</span>
                     </div>
 
-                    <div className="my-2 border-t border-white/10" />
-
-                    <div className="flex items-center justify-between text-white/70">
+                    <div className="summary-row">
                         <span>Platform Fee</span>
                         <span>{formatPrice(serviceFeeCents)}</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/70">
+                    <div className="summary-row">
                         <span>Processing Fee</span>
                         <span>{formatPrice(processingFeeCents)}</span>
                     </div>
 
-                    <div className="pt-2 border-t border-white/10" />
-
-                    <div className="flex items-center justify-between text-base font-semibold text-white">
-                        <span>Total</span>
-                        <span>{formatPrice(totalCents)}</span>
+                    <div className="event-detail-total-row">
+                        <strong>Total</strong>
+                        <strong>{formatPrice(totalCents)}</strong>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
