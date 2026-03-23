@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import Header from "../components/Header";
 import EventCard from "../components/EventCard";
 import Placeholder from "../components/Placeholder";
 import SectionTitle from "../components/SectionTitle";
@@ -35,7 +34,6 @@ export default function App() {
 
     return (
         <div className="app">
-            <Header />
 
             <section className="hero">
                 <div className="hero-media" aria-hidden="true">
@@ -63,8 +61,8 @@ export default function App() {
                             <a className="btn primary" href="#events">
                                 View Upcoming Shows
                             </a>
-                            <a className="btn outline" href="#book">
-                                Book the Venue
+                            <a className="btn outline" href="/contact">
+                                Contact
                             </a>
                         </div>
 
@@ -275,11 +273,10 @@ export default function App() {
                             </div>
                         </div>
                         <div className="feature">
-                            <div className="feature-title">
-                                BYOB Policy
-                            </div>
+                            <div className="feature-title">BYOB Policy</div>
                             <div className="feature-text">
-                                Alcohol is generally permitted, check event details to be sure.
+                                Alcohol is generally permitted, check event
+                                details to be sure.
                             </div>
                         </div>
                         <div className="feature">
@@ -287,7 +284,8 @@ export default function App() {
                                 Parking / location
                             </div>
                             <div className="feature-text">
-                                Park anywhere around the building, or we offer gated parking for select events.
+                                Park anywhere around the building, or we offer
+                                gated parking for select events.
                                 <span className="muted"> (placeholder)</span>
                             </div>
                         </div>
@@ -303,7 +301,7 @@ export default function App() {
                     </div>
                 </section>
 
-                <section id="book" className="section rentals">
+                <section id="rentals" className="section rentals">
                     <div className="rentals-inner">
                         <div>
                             <h2 className="rentals-title">
@@ -317,11 +315,8 @@ export default function App() {
                             </p>
 
                             <div className="rentals-actions">
-                                <a className="btn primary" href="/book">
+                                <a className="btn primary" href="/contact">
                                     Start a Rental Inquiry
-                                </a>
-                                <a className="btn outline" href="/contact">
-                                    Contact
                                 </a>
                             </div>
 
@@ -423,30 +418,14 @@ export default function App() {
                         </div>
                     </div>
                 </section>
-
-                <footer className="footer">
-                    <div className="footer-left">
-                        <div className="footer-brand">
-                            Rockwell Event Center
-                        </div>
-                        <div className="muted">
-                            Amarillo, TX • Live Music • Rentals
-                        </div>
-                    </div>
-                    <div className="footer-links">
-                        <a href="/events">Events</a>
-                        <a href="/book">Book</a>
-                        <a href="/contact">Contact</a>
-                    </div>
-                </footer>
             </main>
 
             <div className="sticky-cta">
                 <a className="btn primary" href="#events">
                     Tickets
                 </a>
-                <a className="btn outline" href="#book">
-                    Book
+                <a className="btn outline" href="/contact">
+                    Rent the Venue
                 </a>
             </div>
         </div>

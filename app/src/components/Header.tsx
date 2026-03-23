@@ -4,7 +4,7 @@ export default function Header() {
     const { pathname } = useLocation();
 
     function isActive(path: string) {
-        return pathname.startsWith(path);
+        return pathname === path || pathname.startsWith(path + "/");
     }
 
     return (
@@ -25,8 +25,12 @@ export default function Header() {
                             Events
                         </Link>
 
-                        <Link to="/book">Rentals</Link>
-                        <Link to="/contact">Contact</Link>
+                        <Link
+                            to="/contact"
+                            className={isActive("/contact") ? "active" : ""}
+                        >
+                            Contact
+                        </Link>
                     </nav>
 
                     <Link to="/events" className="btn primary header-cta">
