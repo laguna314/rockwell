@@ -33,16 +33,16 @@ export default function Success() {
 
             try {
                 const data = await fetchOrderBySession(sessionId);
+                console.log("rockwell success order", data);
+
                 if (!alive) return;
 
                 setOrder(data);
 
-                const ticketLinks = Array.isArray((data as any).tickets)
-                    ? (data as any).tickets
-                    : [];
+                const tickets = Array.isArray(data?.tickets) ? data.tickets : [];
 
-                const hasPerTicketLinks = ticketLinks.some(
-                    (t: any) =>
+                const hasPerTicketLinks = tickets.some(
+                    (t) =>
                         !!t.appleWalletUrl ||
                         !!t.googleWalletUrl ||
                         !!t.pdfUrl ||
@@ -68,6 +68,7 @@ export default function Success() {
                 }, POLL_INTERVAL_MS);
             } catch (e: any) {
                 if (!alive) return;
+                console.error("success page load error", e);
                 setError(e?.message || "Failed to load order");
             } finally {
                 if (alive) setLoading(false);
@@ -82,11 +83,11 @@ export default function Success() {
         };
     }, [sessionId, pollCount]);
 
-    const tickets = (order as any)?.tickets ?? [];
-    const hasTicketList = Array.isArray(tickets) && tickets.length > 0;
+    const tickets = Array.isArray(order?.tickets) ? order.tickets : [];
+    const hasTicketList = tickets.length > 0;
 
     const hasAnyTicketLinks = hasTicketList
-        ? tickets.some((t: any) => !!t.appleWalletUrl || !!t.googleWalletUrl)
+        ? tickets.some((t) => !!t.appleWalletUrl || !!t.googleWalletUrl)
         : false;
 
     const hasWalletLinks =
@@ -121,8 +122,7 @@ export default function Success() {
 
                     {!sessionId ? (
                         <p className="muted" style={{ marginTop: "1.5rem" }}>
-                            No session ID found. Please return to Events and try
-                            again.
+                            No session ID found. Please return to Events and try again.
                         </p>
                     ) : loading && !order ? (
                         <p className="muted" style={{ marginTop: "1.5rem" }}>
@@ -140,34 +140,30 @@ export default function Success() {
                             >
                                 <div className="event-detail-meta">
                                     <div>
-                                        <strong>Event:</strong>{" "}
-                                        {order.eventTitle}
+                                        <strong>Event:</strong> {order.eventTitle || "Event"}
                                     </div>
                                     <div>
                                         <strong>Date:</strong>{" "}
-                                        {formatDateTime(order.dateISO)}
+                                        {order.dateISO ? formatDateTime(order.dateISO) : "TBA"}
                                     </div>
                                     <div>
-                                        <strong>Venue:</strong> {order.venue}
+                                        <strong>Venue:</strong> {order.venue || "Rockwell Event Center"}
                                     </div>
                                     <div>
-                                        <strong>Receipt sent to:</strong>{" "}
-                                        {order.email ?? "—"}
+                                        <strong>Receipt sent to:</strong> {order.email ?? "—"}
                                     </div>
                                     <div>
-                                        <strong>Status:</strong> {order.status}
+                                        <strong>Status:</strong> {order.status || "pending"}
                                     </div>
                                 </div>
                             </div>
 
-                            {order.status !== "paid" &&
-                            pollCount < MAX_POLL_ATTEMPTS ? (
+                            {order.status !== "paid" && pollCount < MAX_POLL_ATTEMPTS ? (
                                 <div
                                     className="muted"
                                     style={{ marginTop: "1rem", fontSize: "0.9rem" }}
                                 >
-                                    Syncing tickets… ({pollCount + 1}/
-                                    {MAX_POLL_ATTEMPTS})
+                                    Syncing tickets… ({pollCount + 1}/{MAX_POLL_ATTEMPTS})
                                 </div>
                             ) : null}
 
@@ -180,18 +176,11 @@ export default function Success() {
                                     }}
                                 >
                                     {hasTicketList ? (
-                                        <div
-                                            style={{
-                                                display: "grid",
-                                                gap: "1rem",
-                                            }}
-                                        >
-                                            {tickets.map((t: any, idx: number) => {
+                                        <div style={{ display: "grid", gap: "1rem" }}>
+                                            {tickets.map((t, idx) => {
                                                 const label = `Ticket ${t.index ?? idx + 1}`;
-                                                const apple =
-                                                    t.appleWalletUrl ?? null;
-                                                const google =
-                                                    t.googleWalletUrl ?? null;
+                                                const apple = t.appleWalletUrl ?? null;
+                                                const google = t.googleWalletUrl ?? null;
 
                                                 return (
                                                     <div
@@ -249,21 +238,21 @@ export default function Success() {
                                             }}
                                         >
                                             <a
-                                                className={`btn primary ${order?.appleWalletUrl ? "" : "disabled-link"}`}
-                                                href={order?.appleWalletUrl ?? "#"}
+                                                className={`btn primary ${order.appleWalletUrl ? "" : "disabled-link"}`}
+                                                href={order.appleWalletUrl ?? "#"}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                aria-disabled={!order?.appleWalletUrl}
+                                                aria-disabled={!order.appleWalletUrl}
                                             >
                                                 Add to Apple Wallet
                                             </a>
 
                                             <a
-                                                className={`btn outline ${order?.googleWalletUrl ? "" : "disabled-link"}`}
-                                                href={order?.googleWalletUrl ?? "#"}
+                                                className={`btn outline ${order.googleWalletUrl ? "" : "disabled-link"}`}
+                                                href={order.googleWalletUrl ?? "#"}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                aria-disabled={!order?.googleWalletUrl}
+                                                aria-disabled={!order.googleWalletUrl}
                                             >
                                                 Add to Google Wallet
                                             </a>
@@ -279,23 +268,19 @@ export default function Success() {
                                         }}
                                     >
                                         <a
-                                            className={`btn outline ${order?.pdfUrl ? "" : "disabled-link"}`}
-                                            href={order?.pdfUrl ?? "#"}
+                                            className={`btn outline ${order.pdfUrl ? "" : "disabled-link"}`}
+                                            href={order.pdfUrl ?? "#"}
                                             target="_blank"
                                             rel="noreferrer"
-                                            aria-disabled={!order?.pdfUrl}
+                                            aria-disabled={!order.pdfUrl}
                                         >
                                             Download PDF Backup
                                         </a>
                                     </div>
                                 </div>
                             ) : (
-                                <div
-                                    className="muted"
-                                    style={{ marginTop: "1.5rem" }}
-                                >
-                                    Links aren’t available yet. Refresh in a few
-                                    seconds.
+                                <div className="muted" style={{ marginTop: "1.5rem" }}>
+                                    Links aren’t available yet. Refresh in a few seconds.
                                 </div>
                             )}
                         </>
