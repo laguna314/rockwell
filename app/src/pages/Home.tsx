@@ -77,66 +77,83 @@ export default function App() {
                     </div>
 
                     <div className="hero-panel">
-                        <div className="panel">
-                            <div className="panel-kicker">Featured</div>
+                        <div className="panel panel-featured">
+                            <div className="panel-featured-content">
+                                <div className="panel-kicker">Featured</div>
 
-                            {featured ? (
-                                <>
-                                    <div className="panel-title">
-                                        {featured.title}
-                                    </div>
-                                    <div className="panel-meta">
-                                        {formatLong(featured.dateISO)}
-                                    </div>
-
-                                    <div className="panel-actions">
-                                        <a
-                                            className="btn primary"
-                                            href={`/events/${featured.slug}`}
-                                        >
-                                            Buy Tickets
-                                        </a>
-                                        <a
-                                            className="btn outline"
-                                            href={`/events/${featured.slug}`}
-                                        >
-                                            Details
-                                        </a>
-                                    </div>
-
-                                    {featured.agePolicy ? (
-                                        <div className="panel-note">
-                                            {featured.agePolicy}
+                                {featured ? (
+                                    <>
+                                        <div className="panel-title">
+                                            {featured.title}
                                         </div>
-                                    ) : null}
-                                </>
+                                        <div className="panel-meta">
+                                            {formatLong(featured.dateISO)}
+                                        </div>
+
+                                        <div className="panel-actions">
+                                            <a
+                                                className="btn primary"
+                                                href={`/events/${featured.slug}`}
+                                            >
+                                                Buy Tickets
+                                            </a>
+                                            <a
+                                                className="btn outline"
+                                                href={`/events/${featured.slug}`}
+                                            >
+                                                Details
+                                            </a>
+                                        </div>
+
+                                        {featured.agePolicy ? (
+                                            <div className="panel-note">
+                                                {featured.agePolicy}
+                                            </div>
+                                        ) : null}
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="panel-title">
+                                            Next show spotlight
+                                        </div>
+                                        <div className="panel-meta">
+                                            Hook this to your next scheduled
+                                            event
+                                        </div>
+
+                                        <div className="panel-actions">
+                                            <a
+                                                className="btn primary"
+                                                href="#events"
+                                            >
+                                                Tickets
+                                            </a>
+                                            <a
+                                                className="btn outline"
+                                                href="#events"
+                                            >
+                                                Lineup
+                                            </a>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+
+                            {featured?.posterUrl ? (
+                                <div className="panel-poster">
+                                    <img
+                                        src={featured.poster_url}
+                                        alt={`${featured.title} poster`}
+                                        loading="lazy"
+                                    />
+                                </div>
                             ) : (
-                                <>
-                                    <div className="panel-title">
-                                        Next show spotlight
-                                    </div>
-                                    <div className="panel-meta">
-                                        Hook this to your next scheduled event
-                                    </div>
+                                <div className="panel-poster panel-poster-placeholder">
                                     <Placeholder
                                         label="FEATURED EVENT GRAPHIC (placeholder)"
-                                        height={180}
+                                        height={220}
                                     />
-                                    <div className="panel-actions">
-                                        <a
-                                            className="btn primary"
-                                            href="#events"
-                                        >
-                                            Tickets
-                                        </a>
-                                        <a
-                                            className="btn outline"
-                                            href="#events"
-                                        >
-                                            Lineup
-                                        </a>
-                                    </div>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
