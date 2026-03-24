@@ -306,6 +306,14 @@ a:hover { color: #fff; }
 }
 .footer-brand { font-weight: 1000; }
 .footer-links { display: flex; gap: 12px; }
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.25rem;
+}
 
 /* Sticky CTA */
 .sticky-cta {
