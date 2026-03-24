@@ -133,27 +133,32 @@ a:hover { color: #fff; }
     min-height: 320px;
     display: flex;
     align-items: flex-end;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
 }
 
 .panel-featured-content {
     padding: 16px;
 }
 
-/* Background poster */
 .panel-bg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top; /* 👈 KEY PART */
+    object-position: top;
+    transform: scale(1.02);
+    animation: heroPosterZoom 14s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
-/* Dark gradient for readability */
 .panel-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient( to top, rgba(0,0,0,0.85), rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) );
+    background: linear-gradient( to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.50) 45%, rgba(0,0,0,0.18) 100% );
+    z-index: 0;
 }
 
 /* Content sits on top */
@@ -162,6 +167,31 @@ a:hover { color: #fff; }
     z-index: 1;
     padding: 16px;
     width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .panel-featured:hover .panel-bg {
+        transform: scale(1.06);
+    }
+}
+
+/* Slow ambient motion */
+@keyframes heroPosterZoom {
+    from {
+        transform: scale(1.02) translateY(0);
+    }
+
+    to {
+        transform: scale(1.08) translateY(-6px);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .panel-bg {
+        animation: none;
+        transform: scale(1.03);
+    }
 }
 
 .hero-glow {
