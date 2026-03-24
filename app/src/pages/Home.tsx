@@ -78,7 +78,7 @@ export default function App() {
 
                     <div className="hero-panel">
                         <div className="panel panel-featured">
-                            {featured?.posterUrl && (
+                            {featured?.poster_url && (
                                 <img
                                     src={featured.posterUrl}
                                     alt={featured.title}
