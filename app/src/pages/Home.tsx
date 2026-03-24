@@ -80,7 +80,7 @@ export default function App() {
                         <div className="panel panel-featured">
                             {featured?.poster_url && (
                                 <img
-                                    src={featured.posterUrl}
+                                    src={featured.poster_url}
                                     alt={featured.title}
                                     className="panel-bg"
                                     loading="lazy"
