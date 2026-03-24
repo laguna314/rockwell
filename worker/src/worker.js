@@ -269,6 +269,37 @@ export default {
                 });
             }
 
+                        // GET /api/orders/by-session/:sessionId
+            if (
+                request.method === "GET" &&
+                /^\/api\/orders\/by-session\/[^/]+$/.test(url.pathname)
+            ) {
+                const parts = url.pathname.split("/");
+                const sessionId = encodeURIComponent(parts[4]);
+
+                const res = await fetch(
+                    `${ACCEDO_API_BASE}/api/orders/by-session/${sessionId}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    }
+                );
+
+                const text = await res.text();
+
+                return new Response(text, {
+                    status: res.status,
+                    statusText: res.statusText,
+                    headers: {
+                        "Content-Type":
+                            res.headers.get("Content-Type") ||
+                            "application/json",
+                    },
+                });
+            }
+
             // POST /api/contact
             if (request.method === "POST" && url.pathname === "/api/contact") {
                 return handleContactRequest(request, env);
