@@ -78,7 +78,18 @@ export default function App() {
 
                     <div className="hero-panel">
                         <div className="panel panel-featured">
-                            <div className="panel-featured-content">
+                            {featured?.posterUrl && (
+                                <img
+                                    src={featured.posterUrl}
+                                    alt={featured.title}
+                                    className="panel-bg"
+                                    loading="lazy"
+                                />
+                            )}
+
+                            <div className="panel-overlay" />
+
+                            <div className="panel-content">
                                 <div className="panel-kicker">Featured</div>
 
                                 {featured ? (
@@ -86,6 +97,7 @@ export default function App() {
                                         <div className="panel-title">
                                             {featured.title}
                                         </div>
+
                                         <div className="panel-meta">
                                             {formatLong(featured.dateISO)}
                                         </div>
@@ -97,6 +109,7 @@ export default function App() {
                                             >
                                                 Buy Tickets
                                             </a>
+
                                             <a
                                                 className="btn outline"
                                                 href={`/events/${featured.slug}`}
@@ -105,56 +118,20 @@ export default function App() {
                                             </a>
                                         </div>
 
-                                        {featured.agePolicy ? (
+                                        {featured.agePolicy && (
                                             <div className="panel-note">
                                                 {featured.agePolicy}
                                             </div>
-                                        ) : null}
+                                        )}
                                     </>
                                 ) : (
                                     <>
                                         <div className="panel-title">
                                             Next show spotlight
                                         </div>
-                                        <div className="panel-meta">
-                                            Hook this to your next scheduled
-                                            event
-                                        </div>
-
-                                        <div className="panel-actions">
-                                            <a
-                                                className="btn primary"
-                                                href="#events"
-                                            >
-                                                Tickets
-                                            </a>
-                                            <a
-                                                className="btn outline"
-                                                href="#events"
-                                            >
-                                                Lineup
-                                            </a>
-                                        </div>
                                     </>
                                 )}
                             </div>
-
-                            {featured?.posterUrl ? (
-                                <div className="panel-poster">
-                                    <img
-                                        src={featured.poster_url}
-                                        alt={`${featured.title} poster`}
-                                        loading="lazy"
-                                    />
-                                </div>
-                            ) : (
-                                <div className="panel-poster panel-poster-placeholder">
-                                    <Placeholder
-                                        label="FEATURED EVENT GRAPHIC (placeholder)"
-                                        height={220}
-                                    />
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
