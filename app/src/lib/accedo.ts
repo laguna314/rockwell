@@ -57,7 +57,7 @@ export type OrderBySessionResponse = {
     status: string;
     eventTitle: string;
     venue: string;
-    dateISO: string;
+    dateISO: string | null;
     email: string | null;
     appleWalletUrl?: string | null;
     googleWalletUrl?: string | null;
@@ -135,24 +135,26 @@ export async function fetchOrderBySession(
     }
 
     return {
-        status: data.status,
-        eventTitle: data.eventTitle,
-        venue: data.venue,
-        dateISO: data.dateISO,
-        email: data.email ?? null,
-        appleWalletUrl: data.apple_wallet_url ?? null,
-        googleWalletUrl: data.google_wallet_url ?? null,
-        pdfUrl: data.pdf_url ?? null,
-        tickets: Array.isArray(data.tickets)
+        status: String(data?.status || ""),
+        eventTitle: String(data?.eventTitle || ""),
+        venue: data?.location?.name || "",
+        dateISO: data?.dateISO ?? null,
+        email: data?.email ?? null,
+        appleWalletUrl:
+            data?.appleWalletUrl ?? data?.apple_wallet_url ?? null,
+        googleWalletUrl:
+            data?.googleWalletUrl ?? data?.google_wallet_url ?? null,
+        pdfUrl: data?.pdfUrl ?? data?.pdf_url ?? null,
+        tickets: Array.isArray(data?.tickets)
             ? data.tickets.map((t: any, idx: number) => ({
-                  ticketId: t.ticketId ?? t.id ?? String(idx),
-                  index: t.index ?? idx + 1,
+                  ticketId: t?.ticketId ?? t?.id ?? String(idx),
+                  index: t?.index ?? idx + 1,
                   appleWalletUrl:
-                      t.appleWalletUrl ?? t.apple_wallet_url ?? null,
+                      t?.appleWalletUrl ?? t?.apple_wallet_url ?? null,
                   googleWalletUrl:
-                      t.googleWalletUrl ?? t.google_wallet_url ?? null,
-                  pdfUrl: t.pdfUrl ?? t.pdf_url ?? null,
-                  passUrl: t.passUrl ?? t.pass_url ?? null,
+                      t?.googleWalletUrl ?? t?.google_wallet_url ?? null,
+                  pdfUrl: t?.pdfUrl ?? t?.pdf_url ?? null,
+                  passUrl: t?.passUrl ?? t?.pass_url ?? null,
               }))
             : [],
     };
