@@ -34,7 +34,6 @@ export default function App() {
 
     return (
         <div className="app">
-
             <section className="hero">
                 <div className="hero-media" aria-hidden="true">
                     <div className="hero-bg" />
@@ -364,21 +363,25 @@ export default function App() {
                     <div className="quotes">
                         <div className="quote">
                             <div className="quote-text">
-                                “Best sound in town.”
+                                “Great place to see live music with a good
+                                vibe.”
                             </div>
-                            <div className="quote-by">— Reviewer</div>
+                            <div className="quote-by">— Facebook Reviewer</div>
                         </div>
                         <div className="quote">
                             <div className="quote-text">
-                                “The staff handled our event perfectly.”
+                                “Great atmosphere and really great sound and
+                                lighting. Love this venue!!!”
                             </div>
-                            <div className="quote-by">— Promoter</div>
+                            <div className="quote-by">— Google Reviewer</div>
                         </div>
                         <div className="quote">
                             <div className="quote-text">
-                                “Rockwell brings the energy.”
+                                “Awesome place. Been to few events there and
+                                they rock it out. Awesome place for anything
+                                from family reunions to full out rock show.”
                             </div>
-                            <div className="quote-by">— Artist</div>
+                            <div className="quote-by">— Google Reviewer</div>
                         </div>
                     </div>
                 </section>
