@@ -16,6 +16,7 @@ export default function App() {
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/events/:slug" element={<EventDetail />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/success" element={<Success />} />
             </Routes>
 
             <Footer />
