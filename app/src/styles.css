@@ -1181,3 +1181,8 @@ a:hover { color: #fff; }
     pointer-events: none;
 }
 
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.45;
+}
+

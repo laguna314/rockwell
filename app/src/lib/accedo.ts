@@ -44,6 +44,27 @@ export type PublicTicketType = {
     isAvailable: boolean;
 };
 
+export type SuccessTicketLink = {
+    ticketId?: string;
+    index?: number;
+    appleWalletUrl?: string | null;
+    googleWalletUrl?: string | null;
+    pdfUrl?: string | null;
+    passUrl?: string | null;
+};
+
+export type OrderBySessionResponse = {
+    status: string;
+    eventTitle: string;
+    venue: string;
+    dateISO: string;
+    email: string | null;
+    appleWalletUrl?: string | null;
+    googleWalletUrl?: string | null;
+    pdfUrl?: string | null;
+    tickets?: SuccessTicketLink[];
+};
+
 type CheckoutInput = {
     eventId: string;
     email?: string;
@@ -90,6 +111,51 @@ export async function getTicketTypesBySlug(
     );
     const data = await readJsonOrThrow(res);
     return data.ticketTypes || [];
+}
+
+export async function fetchOrderBySession(
+    sessionId: string
+): Promise<OrderBySessionResponse> {
+    const res = await fetch(
+        `/api/orders/by-session/${encodeURIComponent(sessionId)}`,
+        {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+            },
+            credentials: "include",
+        }
+    );
+
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : null;
+
+    if (!res.ok) {
+        throw new Error(data?.error || `HTTP ${res.status}`);
+    }
+
+    return {
+        status: data.status,
+        eventTitle: data.eventTitle,
+        venue: data.venue,
+        dateISO: data.dateISO,
+        email: data.email ?? null,
+        appleWalletUrl: data.apple_wallet_url ?? null,
+        googleWalletUrl: data.google_wallet_url ?? null,
+        pdfUrl: data.pdf_url ?? null,
+        tickets: Array.isArray(data.tickets)
+            ? data.tickets.map((t: any, idx: number) => ({
+                  ticketId: t.ticketId ?? t.id ?? String(idx),
+                  index: t.index ?? idx + 1,
+                  appleWalletUrl:
+                      t.appleWalletUrl ?? t.apple_wallet_url ?? null,
+                  googleWalletUrl:
+                      t.googleWalletUrl ?? t.google_wallet_url ?? null,
+                  pdfUrl: t.pdfUrl ?? t.pdf_url ?? null,
+                  passUrl: t.passUrl ?? t.pass_url ?? null,
+              }))
+            : [],
+    };
 }
 
 export async function createCheckoutSession(
