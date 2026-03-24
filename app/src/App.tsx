@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import EventsPage from "./pages/EventsPage";
 import EventDetail from "./pages/EventDetail";
 import ContactPage from "./pages/Contact";
+import Success from "./pages/Success";
 
 export default function App() {
     return (
