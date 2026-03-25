@@ -6,6 +6,7 @@ import {
     createCheckoutSession,
     getEventBySlug,
     getTicketTypesBySlug,
+    splitIntoParagraphs,
     type PublicEventDetail,
     type PublicTicketType,
 } from "../lib/accedo";
@@ -92,6 +93,7 @@ export default function EventDetailPage() {
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
     const pricing = calculateOrderPricing(ticketTypes, quantities);
+    const paragraphs = splitIntoParagraphs(event.longDescription || event.description);
 
     return (
         <div className="app">
@@ -129,14 +131,24 @@ export default function EventDetailPage() {
                                     ) : null}
 
                                     <div className="event-detail-card event-detail-card-glass">
-                                        <div className="pill-label">
-                                            About This Event
-                                        </div>
-                                        <p className="event-detail-description">
-                                            {event.description ||
-                                                "More event details coming soon."}
-                                        </p>
-                                    </div>
+    <div className="pill-label">
+        About This Event
+    </div>
+
+    {paragraphs.length > 0 ? (
+        <div className="space-y-4 event-detail-description">
+            {paragraphs.map((p, i) => (
+                <p key={i} className="whitespace-pre-line">
+                    {p}
+                </p>
+            ))}
+        </div>
+    ) : (
+        <p className="event-detail-description">
+            More event details coming soon.
+        </p>
+    )}
+</div>
                                 </div>
 
                                 <aside className="event-detail-side">

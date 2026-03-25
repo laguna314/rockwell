@@ -189,3 +189,12 @@ export async function createCheckoutSession(
 
     return data;
 }
+
+//for rendering long description
+export function splitIntoParagraphs(text?: string | null) {
+  if (!text) return [];
+  return text
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
