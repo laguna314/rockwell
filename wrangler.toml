@@ -6,6 +6,11 @@ compatibility_date = "2025-01-01"
 CONTACT_TO_EMAIL = "rockwelleventcenter@gmail.com"
 CONTACT_FROM_EMAIL = "noreply@rockwelleventcenter.com"
 
+[observability]
+[observability.logs]
+enabled = true
+invocation_logs = true
+
 [assets]
 directory = "./app/dist"
 binding = "ASSETS"
