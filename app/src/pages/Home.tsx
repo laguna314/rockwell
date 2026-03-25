@@ -279,7 +279,6 @@ export default function App() {
                             <div className="feature-text">
                                 Park anywhere around the building, or we offer
                                 gated parking for select events.
-                                <span className="muted"> (placeholder)</span>
                             </div>
                         </div>
                         <div className="feature">
