@@ -93,7 +93,7 @@ export default function EventDetailPage() {
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
     const pricing = calculateOrderPricing(ticketTypes, quantities);
-    const paragraphs = splitIntoParagraphs(event.longDescription || event.description);
+    const paragraphs = splitIntoParagraphs(event.long_description || event.description);
 
     return (
         <div className="app">
