@@ -93,7 +93,9 @@ export default function EventDetailPage() {
 
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
     const pricing = calculateOrderPricing(ticketTypes, quantities);
-    const paragraphs = splitIntoParagraphs(event.long_description || event.description);
+    const paragraphs = splitIntoParagraphs(
+    event?.long_description || event?.description || ""
+);
 
     return (
         <div className="app">
@@ -136,9 +138,12 @@ export default function EventDetailPage() {
     </div>
 
     {paragraphs.length > 0 ? (
-        <div className="space-y-4 event-detail-description">
+        <div className="event-detail-description">
             {paragraphs.map((p, i) => (
-                <p key={i} className="whitespace-pre-line">
+                <p
+                    key={i}
+                    style={{ whiteSpace: "pre-line", marginBottom: "1rem" }}
+                >
                     {p}
                 </p>
             ))}
