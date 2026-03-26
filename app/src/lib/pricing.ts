@@ -1,6 +1,7 @@
 import type { PublicTicketType } from "./accedo";
 
-const SERVICE_FEE_CENTS = 125;
+const PLATFORM_FEE_CENTS = 125;
+const SALES_TAX_RATE = 0.0625;
 
 export function calculateSubtotalCents(
   ticketTypes: PublicTicketType[],
@@ -19,12 +20,19 @@ export function calculateTicketCount(quantities: Record<string, number>) {
 
 export function calculateProcessingFeeCents(
   baseSubtotalCents: number,
-  serviceFeeCents: number
+  platformFeeCents: number
 ) {
-  const preProcessingCents = baseSubtotalCents + serviceFeeCents;
+  const preProcessingCents = baseSubtotalCents + platformFeeCents;
   if (preProcessingCents <= 0) return 0;
 
   return Math.ceil((0.029 * preProcessingCents + 30) / (1 - 0.029));
+}
+
+export function calculateSalesTaxCents(
+  taxableAmountCents: number
+) {
+  if (taxableAmountCents <= 0) return 0;
+  return Math.round(taxableAmountCents * SALES_TAX_RATE);
 }
 
 export function calculateOrderPricing(
@@ -33,18 +41,29 @@ export function calculateOrderPricing(
 ) {
   const subtotalCents = calculateSubtotalCents(ticketTypes, quantities);
   const ticketCount = calculateTicketCount(quantities);
-  const serviceFeeCents = ticketCount * SERVICE_FEE_CENTS;
+
+  const platformFeeCents = ticketCount * PLATFORM_FEE_CENTS;
+
   const processingFeeCents = calculateProcessingFeeCents(
     subtotalCents,
-    serviceFeeCents
+    platformFeeCents
   );
-  const totalCents = subtotalCents + serviceFeeCents + processingFeeCents;
+
+  const serviceFeesCents = platformFeeCents + processingFeeCents;
+
+  const salesTaxCents = calculateSalesTaxCents(
+    subtotalCents + serviceFeesCents
+  );
+
+  const totalCents = subtotalCents + serviceFeesCents + salesTaxCents;
 
   return {
     subtotalCents,
     ticketCount,
-    serviceFeeCents,
+    platformFeeCents,
     processingFeeCents,
+    serviceFeesCents,
+    salesTaxCents,
     totalCents,
   };
 }

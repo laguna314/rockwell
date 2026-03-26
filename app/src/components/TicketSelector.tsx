@@ -23,8 +23,12 @@ export default function TicketSelector({
     onQuantityChange,
     pricing,
 }: Props) {
-    const { subtotalCents, serviceFeeCents, processingFeeCents, totalCents } =
-        pricing;
+    const {
+        subtotalCents,
+        serviceFeesCents,
+        salesTaxCents,
+        totalCents,
+    } = pricing;
 
     return (
         <div className="ticket-selector">
@@ -101,13 +105,13 @@ export default function TicketSelector({
                     </div>
 
                     <div className="summary-row">
-                        <span>Platform Fee</span>
-                        <span>{formatPrice(serviceFeeCents)}</span>
+                        <span>Service Fees</span>
+                        <span>{formatPrice(serviceFeesCents)}</span>
                     </div>
 
                     <div className="summary-row">
-                        <span>Processing Fee</span>
-                        <span>{formatPrice(processingFeeCents)}</span>
+                        <span>Sales Tax (6.25%)</span>
+                        <span>{formatPrice(salesTaxCents)}</span>
                     </div>
 
                     <div className="event-detail-total-row">
