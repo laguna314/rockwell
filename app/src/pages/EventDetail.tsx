@@ -94,7 +94,7 @@ export default function EventDetailPage() {
     const hasAvailableTickets = ticketTypes.some((tt) => tt.isAvailable);
     const pricing = calculateOrderPricing(ticketTypes, quantities);
     const paragraphs = splitIntoParagraphs(
-    event?.long_description || event?.description || ""
+    event?.longDescription || event?.description || ""
 );
 
     return (
