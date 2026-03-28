@@ -71,7 +71,7 @@ export default function App() {
                                 Mobile tickets available
                             </span>
                             <span className="badge">
-                                Fast entry • Secure checkout
+                                Secure checkout
                             </span>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ export default function App() {
                     </div>
                     <div className="stat">
                         <div className="stat-num">Pro</div>
-                        <div className="stat-label">Sound + stage-ready</div>
+                        <div className="stat-label">Sound + Stage</div>
                     </div>
                     <div className="stat">
                         <div className="stat-num">Amarillo</div>
@@ -235,7 +235,7 @@ export default function App() {
                 <section className="section">
                     <SectionTitle
                         title="Why Rockwell"
-                        subtitle="Promoters, bands, and fans — this is what makes Rockwell different."
+                        subtitle="Promoters, bands, and fans, this is what makes Rockwell different."
                     />
 
                     <div className="features">
@@ -245,12 +245,12 @@ export default function App() {
                             </div>
                             <div className="feature-text">
                                 Clean power, clean sound, and a layout that
-                                works for small and large live shows.
+                                works for small, large, and outdoor live shows.
                             </div>
                         </div>
                         <div className="feature">
                             <div className="feature-title">
-                                Fast entry + mobile tickets
+                                Digital Wallet based tickets
                             </div>
                             <div className="feature-text">
                                 Digital first, but paper tickets are good too!
@@ -258,11 +258,10 @@ export default function App() {
                         </div>
                         <div className="feature">
                             <div className="feature-title">
-                                Great for touring & locals
+                                Great for touring acts & locals
                             </div>
                             <div className="feature-text">
-                                From local showcases to touring nights —
-                                flexible setup.
+                                From local acts to touring acts, multiple rooms and stages.
                             </div>
                         </div>
                         <div className="feature">
@@ -302,7 +301,7 @@ export default function App() {
                             <p className="rentals-text">
                                 Need a space for a party, release show,
                                 corporate event, fundraiser, or community
-                                gathering? Tell us what you’re planning — we’ll
+                                gathering? Tell us what you’re planning, we’ll
                                 respond fast.
                             </p>
 
